@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "resource.h"
 #include <sstream>
 
 //Init static var
@@ -68,14 +69,13 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		PostQuitMessage(0); //Sends a quit message with exit code param
 		return 0;
 	case WM_KEYDOWN: //Not Case Sensitive
-		if (wParam == 'F') //Needs to be capital
-		{
-			SetWindowText(hWnd, "Switched"); //Switches the window text
-		}
+		keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
 		break;
 	case WM_KEYUP:
+		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
 		break;
 	case WM_CHAR: // Case sensitive
+		keyboard.OnChar(static_cast<unsigned char>(wParam));
 		break;
 	case WM_LBUTTONDOWN:
 		break;
@@ -109,8 +109,8 @@ Window::WindowClass::WindowClass() noexcept
 	windowsClass.cbClsExtra = 0; //Dont allocate extra bytes for stoof
 	windowsClass.cbWndExtra = 0; //Dont allocate extra bytes for stoof
 	windowsClass.hInstance = GetInstance(); //Pass the hinstance
-	windowsClass.hIcon = nullptr; //Used to set up custom icon
-	windowsClass.hIconSm = nullptr; //Same as before but small one
+	windowsClass.hIcon = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0)); //Used to set up custom icon
+	windowsClass.hIconSm = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));; //Same as before but small one
 	windowsClass.lpszClassName = className; //Set class name
 
 	//RegisterClass() - Is old version, use RegisterClassEx()

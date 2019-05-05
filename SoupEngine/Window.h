@@ -1,6 +1,7 @@
 #pragma once
 #include "WindowsMacroUndefs.h"
 #include "SoupException.h"
+#include "Keyboard.h"
 
 // Macro to quickly throw exception
 #define WIND_EXCEPT(hr) Window::Exception(__LINE__, __FILE__, hr)
@@ -49,6 +50,8 @@ public:
 	Window(const Window& other) = delete;
 	Window& operator=(const Window& other) = delete;
 	~Window();
+
+	Keyboard keyboard;
 
 protected:
 	WNDCLASSEX windowsClass;

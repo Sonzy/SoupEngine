@@ -19,6 +19,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		{
 			TranslateMessage(&message); //Checks any specific messages that need to send extra ones e.g WM_KEYDOWN on letters will also post a WM_CHAR
 			DispatchMessage(&message);
+
+			if (window.keyboard.IsKeyPressed(VK_SPACE))
+				MessageBox(nullptr, "We pressed space", "Space pressed", 0);
 		}
 
 		//Return the correct exit code
