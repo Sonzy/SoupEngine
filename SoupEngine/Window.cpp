@@ -25,6 +25,8 @@ Window::Window(int width, int height, const char * name)
 
 	//Show the window
 	ShowWindow(hWnd, SW_SHOW);
+	//Create graphics
+	gfx = std::make_unique<Graphics>(hWnd);
 
 	//Exception example
 	//throw WIND_EXCEPT(ERROR_ARENA_TRASHED);
@@ -41,7 +43,7 @@ std::optional<int> Window::ProcessMessages()
 	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT)
-			return msg.wParam;
+			return (int)msg.wParam;
 
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -54,6 +56,11 @@ void Window::SetWindowTitle(const std::string newTitle)
 {
 	if (SetWindowText(hWnd, newTitle.c_str()) == 0)
 		throw WIND_LAST_EXCEPT();
+}
+
+Graphics & Window::GetGraphics()
+{
+	return *gfx;
 }
 
 int Window::GetWindowWidth()

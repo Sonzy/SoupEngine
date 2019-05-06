@@ -4,6 +4,8 @@
 #include "Keyboard.h"
 #include "Mouse.h"
 #include <optional>
+#include "Graphics.h"
+#include <memory>
 
 // Macro to quickly throw exception
 #define WIND_EXCEPT(hr) Window::Exception(__LINE__, __FILE__, hr)
@@ -55,6 +57,7 @@ public:
 
 	static std::optional<int> ProcessMessages();
 	void SetWindowTitle(const std::string newTitle);
+	Graphics& GetGraphics();
 
 	int GetWindowWidth();
 	int GetWindowHeight();
@@ -69,6 +72,7 @@ protected:
 	int width;
 	int height;
 	HWND hWnd;
+	std::unique_ptr<Graphics> gfx;
 
 private:
 	//I nitially handles the messages to store a pointer to the window

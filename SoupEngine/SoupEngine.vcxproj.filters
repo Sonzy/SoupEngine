@@ -11,6 +11,9 @@
     <Filter Include="Source\Window">
       <UniqueIdentifier>{4488219d-de81-49fa-aecb-f16a7ebb921d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\D3D stuff">
+      <UniqueIdentifier>{590f61dc-3c09-4153-8a42-45d861d4cd32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SoupException.cpp">
@@ -32,6 +35,7 @@
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="SoupTimer.cpp" />
+    <ClCompile Include="Graphics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SoupException.h">
@@ -56,6 +60,7 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="SoupTimer.h" />
+    <ClInclude Include="Graphics.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SoupEngine.rc">
