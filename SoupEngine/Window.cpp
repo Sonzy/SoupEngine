@@ -121,7 +121,7 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		//If we arent in the region, keep capturing mouse if mouse key is pressed
 		else
 		{
-			if (wParam & (MK_LBUTTON | MK_RBUTTON))
+			if (mouse.IsLeftPressed() || mouse.IsRightPressed())
 				mouse.OnMouseMove(points.x, points.y);
 			else
 			{
@@ -150,6 +150,18 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		mouse.OnRightPressed(points.x, points.y);
 		break;
 	}
+	case WM_MBUTTONDOWN:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnMiddlePressed(points.x, points.y);
+		break;
+	}
+	case WM_MBUTTONUP:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnMiddleReleased(points.x, points.y);
+		break;
+	}
 	case WM_RBUTTONUP:
 	{
 		const POINTS points = MAKEPOINTS(lParam);
@@ -159,10 +171,8 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	case WM_MOUSEWHEEL:
 	{
 		const POINTS points = MAKEPOINTS(lParam);
-		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
-			mouse.OnWheelUp(points.x, points.y);
-		else
-			mouse.OnWheelDown(points.x, points.y);
+		mouse.OnWheelDelta(points.x, points.y);
+		break;
 	}
 	}
 
@@ -194,8 +204,8 @@ Window::WindowClass::WindowClass() noexcept
 	windowsClass.cbClsExtra = 0; //Dont allocate extra bytes for stoof
 	windowsClass.cbWndExtra = 0; //Dont allocate extra bytes for stoof
 	windowsClass.hInstance = GetInstance(); //Pass the hinstance
-	windowsClass.hIcon = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0)); //Used to set up custom icon
-	windowsClass.hIconSm = static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));; //Same as before but small one
+	windowsClass.hIcon = nullptr; // static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0)); //Used to set up custom icon
+	windowsClass.hIconSm = nullptr; //static_cast<HICON>(LoadImage(hInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 32, 32, 0));; //Same as before but small one
 	windowsClass.lpszClassName = className; //Set class name
 
 	//RegisterClass() - Is old version, use RegisterClassEx()

@@ -25,7 +25,9 @@
     <ClCompile Include="Keyboard.cpp">
       <Filter>Source\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Source\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SoupException.h">
@@ -43,7 +45,9 @@
     <ClInclude Include="Keyboard.h">
       <Filter>Source\Window</Filter>
     </ClInclude>
-    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Mouse.h">
+      <Filter>Source\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SoupEngine.rc">

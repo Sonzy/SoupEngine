@@ -1,4 +1,5 @@
 #include "Mouse.h"
+#include <Windows.h>
 
 
 std::pair<int, int> Mouse::GetPos() const noexcept
@@ -66,6 +67,22 @@ void Mouse::OnRightPressed(int x, int y) noexcept
 	TrimBuffer();
 }
 
+void Mouse::OnMiddlePressed(int x, int y) noexcept
+{
+	middlePressed = true;
+
+	buffer.push(Mouse::Event(Event::Type::MPress, *this));
+	TrimBuffer();
+}
+
+void Mouse::OnMiddleReleased(int x, int y) noexcept
+{
+	middlePressed = false;
+
+	buffer.push(Mouse::Event(Event::Type::MRelease, *this));
+	TrimBuffer();
+}
+
 void Mouse::OnMouseEnter() noexcept
 {
 	inWindow = true;
@@ -108,6 +125,21 @@ void Mouse::OnWheelDown(int x, int y) noexcept
 {
 	buffer.push(Mouse::Event(Event::Type::WheelDown, *this));
 	TrimBuffer();
+}
+
+void Mouse::OnWheelDelta(int x, int y, int delta) noexcept
+{
+	wheelDeltaCumulative += delta;
+	while (wheelDeltaCumulative >= WHEEL_DELTA) //while loop to catch more than 1 per frame
+	{
+		wheelDeltaCumulative -= WHEEL_DELTA;
+		OnWheelUp(x, y);
+	}
+	while (wheelDeltaCumulative <= -WHEEL_DELTA) //while loop to catch more than 1 per frame
+	{
+		wheelDeltaCumulative += WHEEL_DELTA;
+		OnWheelDown(x, y);
+	}
 }
 
 void Mouse::TrimBuffer() noexcept

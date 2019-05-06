@@ -16,6 +16,8 @@ public:
 			LRelease,
 			RPress,
 			RRelease,
+			MPress,
+			MRelease,
 			WheelUp,
 			WheelDown,
 			Move,
@@ -63,20 +65,25 @@ private:
 	void OnMouseMove(int x, int y) noexcept;
 	void OnLeftPressed(int x, int y) noexcept;
 	void OnRightPressed(int x, int y) noexcept;
+	void OnMiddlePressed(int x, int y) noexcept;
+	void OnMiddleReleased(int x, int y) noexcept;
 	void OnMouseEnter() noexcept;
 	void OnMouseLeave() noexcept;
 	void OnLeftReleased(int x, int y) noexcept;
 	void OnRightReleased(int x, int y) noexcept;
 	void OnWheelUp(int x, int y) noexcept;
 	void OnWheelDown(int x, int y) noexcept;
+	void OnWheelDelta(int x, int y, int delta) noexcept;
 	void TrimBuffer() noexcept;
 
 	static constexpr unsigned int bufferSize = 16u;
-	int x;
-	int y;
-	bool inWindow;
-	bool leftPressed;
-	bool rightPressed;
+	int x = 0;
+	int y = 0;
+	bool inWindow = false;
+	bool leftPressed = false;
+	bool rightPressed = false;
+	bool middlePressed = false;
+	int wheelDeltaCumulative = 0;
 	std::queue<Mouse::Event> buffer;
 };
 
