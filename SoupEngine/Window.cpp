@@ -35,6 +35,21 @@ Window::~Window()
 	DestroyWindow(hWnd);
 }
 
+std::optional<int> Window::ProcessMessages()
+{
+	MSG msg;
+	while (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	{
+		if (msg.message == WM_QUIT)
+			return msg.wParam;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+
+	return {};
+}
+
 void Window::SetWindowTitle(const std::string newTitle)
 {
 	if (SetWindowText(hWnd, newTitle.c_str()) == 0)
@@ -171,7 +186,7 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	case WM_MOUSEWHEEL:
 	{
 		const POINTS points = MAKEPOINTS(lParam);
-		mouse.OnWheelDelta(points.x, points.y);
+		mouse.OnWheelDelta(points.x, points.y, GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
 	}
 	}

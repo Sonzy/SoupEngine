@@ -28,6 +28,10 @@
     <ClCompile Include="Mouse.cpp">
       <Filter>Source\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SoupTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SoupException.h">
@@ -48,6 +52,10 @@
     <ClInclude Include="Mouse.h">
       <Filter>Source\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SoupTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SoupEngine.rc">

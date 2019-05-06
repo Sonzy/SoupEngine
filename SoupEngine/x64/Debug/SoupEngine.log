@@ -1,2 +1,36 @@
-﻿  Window.cpp
-  SoupEngine.vcxproj -> D:\Projects\x64\Debug\SoupEngine.exe
+﻿  Application.cpp
+  Main.cpp
+  Window.cpp
+d:\program files\visual studio\visual studio ide\vc\tools\msvc\14.14.26428\include\optional(74): warning C4244: 'initializing': conversion from 'WPARAM' to 'int', possible loss of data
+  d:\personal projects\soupengine\soupengine\window.cpp(290): note: see reference to function template instantiation 'std::_Optional_destruct_base<_Ty,true>::_Optional_destruct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+  d:\personal projects\soupengine\soupengine\window.cpp(290): note: see reference to function template instantiation 'std::_Optional_destruct_base<_Ty,true>::_Optional_destruct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+  d:\program files\visual studio\visual studio ide\vc\tools\msvc\14.14.26428\include\optional(247): note: see reference to function template instantiation 'std::_Optional_construct_base<_Ty>::_Optional_construct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+  d:\program files\visual studio\visual studio ide\vc\tools\msvc\14.14.26428\include\optional(246): note: see reference to function template instantiation 'std::_Optional_construct_base<_Ty>::_Optional_construct_base<WPARAM&>(std::in_place_t,WPARAM &)' being compiled
+          with
+          [
+              _Ty=int
+          ]
+  d:\personal projects\soupengine\soupengine\window.cpp(44): note: see reference to function template instantiation 'std::optional<int>::optional<WPARAM&,0>(_Ty2)' being compiled
+          with
+          [
+              _Ty2=WPARAM &
+          ]
+  d:\personal projects\soupengine\soupengine\window.cpp(44): note: see reference to function template instantiation 'std::optional<int>::optional<WPARAM&,0>(_Ty2)' being compiled
+          with
+          [
+              _Ty2=WPARAM &
+          ]
+  Generating Code...
+  SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe

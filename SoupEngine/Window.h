@@ -3,6 +3,7 @@
 #include "SoupException.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include <optional>
 
 // Macro to quickly throw exception
 #define WIND_EXCEPT(hr) Window::Exception(__LINE__, __FILE__, hr)
@@ -52,7 +53,7 @@ public:
 	Window& operator=(const Window& other) = delete;
 	~Window();
 
-
+	static std::optional<int> ProcessMessages();
 	void SetWindowTitle(const std::string newTitle);
 
 	int GetWindowWidth();
