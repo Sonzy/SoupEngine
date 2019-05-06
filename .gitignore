@@ -9,6 +9,7 @@
 
 # Precompiled Headers
 /ipch
+/.vs
 *.gch
 *.pch
 *.ipch
