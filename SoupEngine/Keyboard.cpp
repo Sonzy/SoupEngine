@@ -1,4 +1,5 @@
 #include "Keyboard.h"
+#include "Mouse.h"
 
 
 bool Keyboard::IsKeyPressed(unsigned char keycode)

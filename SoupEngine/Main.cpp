@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include "Window.h"
 #include <string>
+#include <sstream>
 
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -20,13 +21,25 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 			TranslateMessage(&message); //Checks any specific messages that need to send extra ones e.g WM_KEYDOWN on letters will also post a WM_CHAR
 			DispatchMessage(&message);
 
-			if (window.keyboard.IsKeyPressed(VK_SPACE))
-				MessageBox(nullptr, "We pressed space", "Space pressed", 0);
+			while (!window.mouse.IsEmpty())
+			{
+				const auto event = window.mouse.ReadEvent();
+				if (event.GetType() == Mouse::Event::Type::Move)
+				{
+					std::ostringstream stringStream;
+					stringStream << "Mouse Pos: " << event.GetXPos() << "," << event.GetYPos();
+					window.SetWindowTitle(stringStream.str());
+				}
+				else if (event.GetType() == Mouse::Event::Type::LeaveWindow)
+				{
+					window.SetWindowTitle("Mouse Left");
+				}
+			}
 		}
 
 		//Return the correct exit code
 		if (result == -1)
-			return -1;
+			throw WIND_LAST_EXCEPT();
 
 		return message.wParam;
 	}

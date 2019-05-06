@@ -6,6 +6,7 @@
 Window::WindowClass Window::WindowClass::windowClass;
 
 Window::Window(int width, int height, const char * name)
+	: width(width), height(height)
 {
 	//Create rect for window
 	RECT windowRegion;
@@ -15,11 +16,12 @@ Window::Window(int width, int height, const char * name)
 	windowRegion.bottom = height + windowRegion.top;
 
 	//Adjust for the topbar etc
-	AdjustWindowRect(&windowRegion, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE);
+	if (AdjustWindowRect(&windowRegion, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
+		throw WIND_LAST_EXCEPT();
 	
 	//Create the window										/* Window Style */						/* Where to spawn the window */
 	hWnd = CreateWindowEx(0, WindowClass::GetName(), name, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT,
-		width, height, nullptr, nullptr, WindowClass::GetInstance(), this);
+		windowRegion.right - windowRegion.left, windowRegion.bottom - windowRegion.top, nullptr, nullptr, WindowClass::GetInstance(), this);
 
 	//Show the window
 	ShowWindow(hWnd, SW_SHOW);
@@ -31,6 +33,22 @@ Window::Window(int width, int height, const char * name)
 Window::~Window()
 {
 	DestroyWindow(hWnd);
+}
+
+void Window::SetWindowTitle(const std::string newTitle)
+{
+	if (SetWindowText(hWnd, newTitle.c_str()) == 0)
+		throw WIND_LAST_EXCEPT();
+}
+
+int Window::GetWindowWidth()
+{
+	return width;
+}
+
+int Window::GetWindowHeight()
+{
+	return height;
 }
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -65,20 +83,87 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 {
 	switch (msg)
 	{
+	//Window Messages================================
 	case WM_CLOSE:
 		PostQuitMessage(0); //Sends a quit message with exit code param
 		return 0;
+	case WM_KILLFOCUS: // When we lose focus, reset the keyboard state
+		keyboard.ClearState();
+	//Key Messages===================================
+	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN: //Not Case Sensitive
-		keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
+		if(!(lParam & 0x40000000) || keyboard.IsAutorepeatEnabled())
+			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
 		break;
+	case WM_SYSKEYUP:
 	case WM_KEYUP:
 		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
 		break;
 	case WM_CHAR: // Case sensitive
 		keyboard.OnChar(static_cast<unsigned char>(wParam));
 		break;
-	case WM_LBUTTONDOWN:
+	//Mouse Messages==================================
+	case WM_MOUSEMOVE:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		//Check if we are in the window
+		if (points.x >= 0 && points.x < width && points.y >= 0 && points.y < height)
+		{
+			mouse.OnMouseMove(points.x, points.y);
+
+			//Check if we have just re-entered the window
+			if (!mouse.IsInWindow())
+			{
+				SetCapture(hWnd);
+				mouse.OnMouseEnter();
+			}
+		}
+		//If we arent in the region, keep capturing mouse if mouse key is pressed
+		else
+		{
+			if (wParam & (MK_LBUTTON | MK_RBUTTON))
+				mouse.OnMouseMove(points.x, points.y);
+			else
+			{
+				//release capture on not click
+				ReleaseCapture();
+				mouse.OnMouseLeave();
+			}
+		}
 		break;
+	}		
+	case WM_LBUTTONDOWN:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnLeftPressed(points.x, points.y);
+		break;
+	}	
+	case WM_LBUTTONUP:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnLeftReleased(points.x, points.y);
+		break;
+	}	
+	case WM_RBUTTONDOWN:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnRightPressed(points.x, points.y);
+		break;
+	}
+	case WM_RBUTTONUP:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		mouse.OnRightReleased(points.x, points.y);
+		break;
+	}
+	case WM_MOUSEWHEEL:
+	{
+		const POINTS points = MAKEPOINTS(lParam);
+		if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
+			mouse.OnWheelUp(points.x, points.y);
+		else
+			mouse.OnWheelDown(points.x, points.y);
+	}
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);

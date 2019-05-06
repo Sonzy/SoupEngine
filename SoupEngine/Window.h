@@ -2,6 +2,7 @@
 #include "WindowsMacroUndefs.h"
 #include "SoupException.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 // Macro to quickly throw exception
 #define WIND_EXCEPT(hr) Window::Exception(__LINE__, __FILE__, hr)
@@ -51,7 +52,14 @@ public:
 	Window& operator=(const Window& other) = delete;
 	~Window();
 
+
+	void SetWindowTitle(const std::string newTitle);
+
+	int GetWindowWidth();
+	int GetWindowHeight();
+
 	Keyboard keyboard;
+	Mouse mouse;
 
 protected:
 	WNDCLASSEX windowsClass;

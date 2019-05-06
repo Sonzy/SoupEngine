@@ -9,6 +9,7 @@ class Keyboard
 	friend class Window;
 public:
 
+	/* Keyboard event class. Used to store all of the information about any keyboard event*/
 	class Event
 	{
 		public: 
@@ -27,7 +28,9 @@ public:
 			bool IsValid() const noexcept;
 			unsigned char GetKeyCode() const noexcept;
 	private:
+		// Type of event
 		Type type;
+		// Keycode
 		unsigned char keycode;
 
 	};
