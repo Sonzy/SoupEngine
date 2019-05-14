@@ -294,3 +294,8 @@ std::string Window::Exception::GetErrorString() const noexcept
 {
 	return TranslateErrorCode(hr);
 }
+
+const char* Window::NoGfxException::GetType() const noexcept
+{
+	return "Soup - No Gfx Exception";
+}

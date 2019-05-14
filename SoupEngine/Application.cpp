@@ -21,9 +21,13 @@ int Application::InitGameLoop()
 }
 
 void Application::Tick()
-{
-	const float time = timer.Peek();
-	std::ostringstream oss;
-	oss << "Time Elapsed: " << std::setprecision(1) << std::fixed << time << "s";
-	window.SetWindowTitle(oss.str());
+{	
+	window.GetGraphics().ClearBuffer(0.0f, 0.0f, 0.0f);
+
+	window.GetGraphics().DrawTestTriangle();
+
+
+
+	window.GetGraphics().EndFrame();
+
 }

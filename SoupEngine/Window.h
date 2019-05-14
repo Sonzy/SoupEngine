@@ -29,6 +29,13 @@ public:
 		HRESULT hr;
 	};
 
+	class NoGfxException : public Exception
+	{
+	public:
+		using Exception::Exception;
+		const char* GetType() const noexcept override;
+	};
+
 private:
 	class WindowClass
 	{
