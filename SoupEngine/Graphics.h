@@ -25,6 +25,16 @@ struct Vertex2D
 	} color;
 };
 
+struct Vertex
+{
+	struct
+	{
+		float x;
+		float y;
+		float z;
+	} pos;
+};
+
 class Graphics
 {
 public:
@@ -77,7 +87,7 @@ public:
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue) noexcept;
 
-	void DrawTestTriangle(float angle);
+	void DrawTestTriangle(float angle, float x, float z);
 private:
 
 #ifndef NDEBUG
@@ -93,5 +103,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context = nullptr;
 	// Render target (canvas)
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTarget = nullptr;
+	// Depth Stencil View
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView = nullptr;
 };
 

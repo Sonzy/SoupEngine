@@ -22,12 +22,8 @@ int Application::InitGameLoop()
 
 void Application::Tick()
 {	
-	window.GetGraphics().ClearBuffer(0.0f, 1.0f, 0.0f);
-
-	window.GetGraphics().DrawTestTriangle(timer.Peek());
-
-
-
+	window.GetGraphics().ClearBuffer(0.0f, 0.0f, 1.0f);
+	window.GetGraphics().DrawTestTriangle(timer.Peek(), (window.mouse.GetXPos() / 400.0f) - 1.0f, (window.mouse.GetYPos() / -300.0f) + 1.0f);
+	window.GetGraphics().DrawTestTriangle(timer.Peek(), 0.0f, 0.0f);
 	window.GetGraphics().EndFrame();
-
 }
