@@ -93,6 +93,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -125,6 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -132,59 +134,55 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="dxerr.cpp" />
-    <ClCompile Include="DXGIInfoManager.cpp" />
-    <ClCompile Include="Graphics.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="SoupException.cpp" />
-    <ClCompile Include="SoupTimer.cpp" />
-    <ClCompile Include="Window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="dxerr.h" />
-    <ClInclude Include="DXGIInfoManager.h" />
-    <ClInclude Include="Graphics.h" />
-    <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="SoupException.h" />
-    <ClInclude Include="SoupTimer.h" />
-    <ClInclude Include="Window.h" />
-    <ClInclude Include="WindowsMacroUndefs.h" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="SoupEngine.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\Assets\SoupEngineIcon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="DXGetErrorDescription.inl" />
-    <None Include="DXGetErrorString.inl" />
-    <None Include="DXTrace.inl" />
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Graphics.cpp" />
+    <ClCompile Include="Source\Error Handling\dxerr.cpp" />
+    <ClCompile Include="Source\Error Handling\DXGIInfoManager.cpp" />
+    <ClCompile Include="Source\Error Handling\SoupException.cpp" />
+    <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Other\SoupTimer.cpp" />
+    <ClCompile Include="Source\Window\Keyboard.cpp" />
+    <ClCompile Include="Source\Window\Mouse.cpp" />
+    <ClCompile Include="Source\Window\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BasicPShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\DirectXStuff\Graphics.h" />
+    <ClInclude Include="Source\Error Handling\dxerr.h" />
+    <ClInclude Include="Source\Error Handling\DXGIInfoManager.h" />
+    <ClInclude Include="Source\Error Handling\GraphicsErrorMacros.h" />
+    <ClInclude Include="Source\Error Handling\SoupException.h" />
+    <ClInclude Include="Source\Error Handling\WindowErrorMacros.h" />
+    <ClInclude Include="Source\Other\SoupTimer.h" />
+    <ClInclude Include="Source\resource.h" />
+    <ClInclude Include="Source\Window\Keyboard.h" />
+    <ClInclude Include="Source\Window\Mouse.h" />
+    <ClInclude Include="Source\Window\Window.h" />
+    <ClInclude Include="Source\Window\WindowsMacroUndefs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Error Handling\DXGetErrorDescription.inl" />
+    <None Include="Source\Error Handling\DXGetErrorString.inl" />
+    <None Include="Source\Error Handling\DXTrace.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Source\Shaders\BasicPShader.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="BasicVShaderhlsl.hlsl">
+    <FxCompile Include="Source\Shaders\BasicVShaderhlsl.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

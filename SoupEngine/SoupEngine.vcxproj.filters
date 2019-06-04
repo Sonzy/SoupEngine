@@ -6,83 +6,23 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source">
-      <UniqueIdentifier>{b63bbf6d-c8d8-4134-953c-a8e0e2633ace}</UniqueIdentifier>
+      <UniqueIdentifier>{07d5ec72-ff8c-4707-9ab9-b8f46ec2f393}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\Window">
-      <UniqueIdentifier>{4488219d-de81-49fa-aecb-f16a7ebb921d}</UniqueIdentifier>
+    <Filter Include="Source\Error Handling">
+      <UniqueIdentifier>{b1e21e24-5297-43ee-a323-34629b773738}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\D3D stuff">
-      <UniqueIdentifier>{590f61dc-3c09-4153-8a42-45d861d4cd32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\D3D stuff\Error Handling">
-      <UniqueIdentifier>{dcb783e8-0f57-4fb4-baf3-dac335f45d9a}</UniqueIdentifier>
+    <Filter Include="Source\Other">
+      <UniqueIdentifier>{12085802-77b6-4f9a-8372-7893b33aa6af}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\Shaders">
-      <UniqueIdentifier>{04882e11-2b36-47c4-9a0c-0932851e9f4a}</UniqueIdentifier>
+      <UniqueIdentifier>{3234733c-84d7-4fed-ac68-621c93827f6e}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SoupException.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Keyboard.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>Source\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SoupTimer.cpp" />
-    <ClCompile Include="Graphics.cpp">
-      <Filter>Source\D3D stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="dxerr.cpp">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
-    </ClCompile>
-    <ClCompile Include="DXGIInfoManager.cpp">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SoupException.h">
-      <Filter>Source\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Source\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowsMacroUndefs.h">
-      <Filter>Source\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Keyboard.h">
-      <Filter>Source\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>Source\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="SoupTimer.h" />
-    <ClInclude Include="Graphics.h">
-      <Filter>Source\D3D stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="dxerr.h">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
-    </ClInclude>
-    <ClInclude Include="DXGIInfoManager.h">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
-    </ClInclude>
+    <Filter Include="Source\Window">
+      <UniqueIdentifier>{ef2bea92-d826-4691-a6d7-5d44b04f181f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\DirectX Stuff">
+      <UniqueIdentifier>{7cf83cd4-f962-435d-9afb-a3e19b5e0bb7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SoupEngine.rc">
@@ -95,21 +35,94 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="DXTrace.inl">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Error Handling\dxerr.cpp">
+      <Filter>Source\Error Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Error Handling\DXGIInfoManager.cpp">
+      <Filter>Source\Error Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Error Handling\SoupException.cpp">
+      <Filter>Source\Error Handling</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Other\SoupTimer.cpp">
+      <Filter>Source\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window\Keyboard.cpp">
+      <Filter>Source\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window\Mouse.cpp">
+      <Filter>Source\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window\Window.cpp">
+      <Filter>Source\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DirectXStuff\Graphics.cpp">
+      <Filter>Source\DirectX Stuff</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\resource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Error Handling\dxerr.h">
+      <Filter>Source\Error Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Error Handling\DXGIInfoManager.h">
+      <Filter>Source\Error Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Error Handling\GraphicsErrorMacros.h">
+      <Filter>Source\Error Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Error Handling\SoupException.h">
+      <Filter>Source\Error Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Error Handling\WindowErrorMacros.h">
+      <Filter>Source\Error Handling</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Other\SoupTimer.h">
+      <Filter>Source\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window\Keyboard.h">
+      <Filter>Source\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window\Mouse.h">
+      <Filter>Source\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window\Window.h">
+      <Filter>Source\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window\WindowsMacroUndefs.h">
+      <Filter>Source\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DirectXStuff\Graphics.h">
+      <Filter>Source\DirectX Stuff</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Source\Error Handling\DXGetErrorDescription.inl">
+      <Filter>Source\Error Handling</Filter>
     </None>
-    <None Include="DXGetErrorDescription.inl">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
+    <None Include="Source\Error Handling\DXGetErrorString.inl">
+      <Filter>Source\Error Handling</Filter>
     </None>
-    <None Include="DXGetErrorString.inl">
-      <Filter>Source\D3D stuff\Error Handling</Filter>
+    <None Include="Source\Error Handling\DXTrace.inl">
+      <Filter>Source\Error Handling</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="BasicVShaderhlsl.hlsl">
+    <FxCompile Include="Source\Shaders\BasicPShader.hlsl">
       <Filter>Source\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="BasicPShader.hlsl">
+    <FxCompile Include="Source\Shaders\BasicVShaderhlsl.hlsl">
       <Filter>Source\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
