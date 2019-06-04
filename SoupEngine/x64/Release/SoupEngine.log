@@ -1,0 +1,20 @@
+﻿  compilation object save succeeded; see D:\Personal Projects\SoupEngine\SoupEngine\BasicPShader.cso
+  compilation object save succeeded; see D:\Personal Projects\SoupEngine\SoupEngine\BasicVShaderhlsl.cso
+  Application.cpp
+  dxerr.cpp
+  DXGIInfoManager.cpp
+d:\personal projects\soupengine\soupengine\windowsmacroundefs.h(4): warning C4005: '_WIN32_WINNT': macro redefinition
+  d:\windows kits\10\include\10.0.17134.0\shared\sdkddkver.h(215): note: see previous definition of '_WIN32_WINNT'
+d:\personal projects\soupengine\soupengine\windowsmacroundefs.h(43): warning C4005: 'STRICT': macro redefinition
+  d:\windows kits\10\include\10.0.17134.0\shared\minwindef.h(23): note: see previous definition of 'STRICT'
+  Graphics.cpp
+  Keyboard.cpp
+  Main.cpp
+  Mouse.cpp
+  SoupException.cpp
+  SoupTimer.cpp
+  Window.cpp
+  Generating code
+  All 684 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Release\SoupEngine.exe

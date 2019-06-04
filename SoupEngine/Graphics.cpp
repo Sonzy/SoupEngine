@@ -96,10 +96,20 @@ void Graphics::ClearBuffer(float red, float green, float blue) noexcept
 	context->ClearRenderTargetView(renderTarget.Get(), color);
 }
 
-void Graphics::DrawTestTriangle()
+void Graphics::DrawTestTriangle(float angle)
 {
 	//Create a array of vertexes to make 2D triangle
-	const Vertex2D vertices[] = { { 0.0f,0.5f },{ 0.5f, -0.5f },{ -0.5f, -0.5f } };
+	Vertex2D vertices[] = 
+	{	
+		{ 0.0f,0.5f, 255, 0, 0 },
+		{ 0.5f, -0.5f , 0, 255, 0},
+		{ -0.5f, -0.5f,  0, 0, 255 },
+		{ -0.3f,0.3f, 255, 0, 255 },
+		{ 0.3f,0.3f, 255, 0, 0 },
+		{ 0.0f, -0.8f, 255, 255, 0 },
+	};
+
+	//vertices[0].color.g = 255;
 
 	//Create a buffer for the vertices
 	wrl::ComPtr<ID3D11Buffer> vertexBuffer;
@@ -117,6 +127,74 @@ void Graphics::DrawTestTriangle()
 
 	HRESULT hr;
 	GFX_THROW_INFO(device->CreateBuffer(&bufferDesc, &subData, &vertexBuffer));
+
+
+	//Bind vertex buffer to the pipeline
+	const UINT stride = sizeof(Vertex2D);
+	const UINT offset = 0u;
+	context->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
+
+
+	//Create index buffer (Index drawing, avoid drawing multiple triangles when unneccesary
+	const unsigned short indices[] =
+	{
+		0,1,2,
+		0,2,3,
+		0,4,1,
+		2,1,5,
+	};
+
+	wrl::ComPtr<ID3D11Buffer> pIndexBuffer;
+	D3D11_BUFFER_DESC indexbufferDesc = {};
+	indexbufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	indexbufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	indexbufferDesc.CPUAccessFlags = 0u;
+	indexbufferDesc.MiscFlags = 0u;
+	indexbufferDesc.ByteWidth = sizeof(indices);
+	indexbufferDesc.StructureByteStride = sizeof(unsigned short);
+
+	D3D11_SUBRESOURCE_DATA indexSubData = {};
+	indexSubData.pSysMem = indices;
+	GFX_THROW_INFO(device->CreateBuffer(&indexbufferDesc, &indexSubData, &pIndexBuffer));
+
+	context->IASetIndexBuffer(pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+
+	// Create a const buffer for our transformation matrices
+	struct ConstantBuffer
+	{
+		struct
+		{
+			float element[4][4];
+		} transformation;
+	};
+
+	//CPU is row major, GPU is column major. Remember row_major specifier in vertex shader if we do it this way
+	const ConstantBuffer cb = 
+	{
+		{	
+			(3.0f / 4.0f) * std::cos(angle),	std::sin(angle),	0.0f,				0.0f,  //Scale matrix by our current aspect ratio
+			(3.0f / 4.0f) * -std::sin(angle),	std::cos(angle),	0.0f,				0.0f,
+			0.0f,				0.0f,				1.0f,				0.0f,
+			0.0f,				0.0f,				0.0f,				1.0f,
+		}
+	};
+
+	// Create the buffer
+	wrl::ComPtr<ID3D11Buffer> pConstantBuffer;
+	D3D11_BUFFER_DESC cbd = {};
+	cbd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	cbd.Usage = D3D11_USAGE_DYNAMIC;
+	cbd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cbd.MiscFlags = 0u;
+	cbd.ByteWidth = sizeof(cb);
+	cbd.StructureByteStride = 0u;
+
+	D3D11_SUBRESOURCE_DATA csd = {};
+	csd.pSysMem = &cb;
+	GFX_THROW_INFO(device->CreateBuffer(&cbd, &csd, &pConstantBuffer));
+
+	//bind the const buffer to the vertex shader
+	context->VSSetConstantBuffers(0u, 1u, pConstantBuffer.GetAddressOf());
 
 
 	wrl::ComPtr<ID3DBlob> blob;
@@ -138,20 +216,11 @@ void Graphics::DrawTestTriangle()
 	wrl::ComPtr<ID3D11InputLayout> inputLayout;
 	const D3D11_INPUT_ELEMENT_DESC ied[] =
 	{
-		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 } // offset by 8bytes since the color is 8 bytes from teh start of the ied
 	};
 	device->CreateInputLayout(ied, (UINT)std::size(ied), blob->GetBufferPointer(), blob->GetBufferSize(), &inputLayout);
 	context->IASetInputLayout(inputLayout.Get());
-
-
-	//Bind this to the pipeline
-	const UINT stride = sizeof(Vertex2D);
-	const UINT offset = 0u;
-	context->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
-
-
-
-
 
 
 	//Bind Render target
@@ -171,7 +240,10 @@ void Graphics::DrawTestTriangle()
 	context->RSSetViewports(1u, &vp);
 
 	//DRAW HUEHEUHE
-	GFX_THROW_INFO_ONLY(context->Draw(std::size(vertices), 0u));
+	//GFX_THROW_INFO_ONLY(context->Draw(std::size(vertices), 0u));
+
+	//Draw using indeces
+	GFX_THROW_INFO_ONLY(context->DrawIndexed((UINT)std::size(indices), 0u, 0u));
 }
 
 

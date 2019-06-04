@@ -8,8 +8,21 @@
 
 struct Vertex2D
 {
-	float x;
-	float y;
+	struct
+	{
+		float x;
+		float y;
+	} pos;
+
+	
+	//colors (specify as single bytes)
+	struct 
+	{
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+		unsigned char a;
+	} color;
 };
 
 class Graphics
@@ -64,7 +77,7 @@ public:
 	void EndFrame();
 	void ClearBuffer(float red, float green, float blue) noexcept;
 
-	void DrawTestTriangle();
+	void DrawTestTriangle(float angle);
 private:
 
 #ifndef NDEBUG

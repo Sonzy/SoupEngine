@@ -22,9 +22,9 @@ int Application::InitGameLoop()
 
 void Application::Tick()
 {	
-	window.GetGraphics().ClearBuffer(0.0f, 0.0f, 0.0f);
+	window.GetGraphics().ClearBuffer(0.0f, 1.0f, 0.0f);
 
-	window.GetGraphics().DrawTestTriangle();
+	window.GetGraphics().DrawTestTriangle(timer.Peek());
 
 
 
