@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Bindable.cpp" />
     <ClCompile Include="Source\DirectXStuff\Graphics.cpp" />
     <ClCompile Include="Source\Error Handling\dxerr.cpp" />
     <ClCompile Include="Source\Error Handling\DXGIInfoManager.cpp" />
@@ -153,6 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Bindable.h" />
     <ClInclude Include="Source\DirectXStuff\Graphics.h" />
     <ClInclude Include="Source\Error Handling\dxerr.h" />
     <ClInclude Include="Source\Error Handling\DXGIInfoManager.h" />
