@@ -12,7 +12,7 @@ IndexBuffer::IndexBuffer(Graphics & gfx, const std::vector<unsigned short>& indi
 	indexbufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	indexbufferDesc.CPUAccessFlags = 0u;
 	indexbufferDesc.MiscFlags = 0u;
-	indexbufferDesc.ByteWidth = sizeof(indices);
+	indexbufferDesc.ByteWidth = UINT(count * sizeof(unsigned short));
 	indexbufferDesc.StructureByteStride = sizeof(unsigned short);
 
 	D3D11_SUBRESOURCE_DATA indexSubData = {};

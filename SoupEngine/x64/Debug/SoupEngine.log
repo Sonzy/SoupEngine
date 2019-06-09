@@ -1,2 +1,4 @@
-﻿  Graphics.cpp
+﻿  VertexBuffer.cpp
+  Box.cpp
+  Generating Code...
   SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe

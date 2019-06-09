@@ -1,11 +1,12 @@
 #include "DXGIInfoManager.h"
 #include "Window/Window.h"
 #include "DirectXStuff/Graphics.h"
+#include "Error Handling/Exceptions.h"
 #include <memory>
 
 #pragma comment(lib, "dxguid.lib")
 
-#define GFX_THROW_NOINFO(hrCall) if(FAILED(hr = hrCall)) throw Graphics::HrException(__LINE__, __FILE__, hr);
+#define GFX_THROW_NOINFO(hrCall) if(FAILED(hr = hrCall)) throw HrException(__LINE__, __FILE__, hr);
 
 
 DXGIInfoManager::DXGIInfoManager()

@@ -9,7 +9,7 @@ DirectX::XMMATRIX Drawable::GetTransformXM() const noexcept
 	return DirectX::XMMATRIX();
 }
 
-void Drawable::Draw(Graphics & gfx) const noexcept(!IS_DEBUG)
+void Drawable::Draw(Graphics & gfx) const noexcept
 {
 	for (auto& b : binds)
 	{
@@ -23,7 +23,7 @@ void Drawable::Update(float deltaTime) noexcept
 {
 }
 
-void Drawable::AddBind(std::unique_ptr<Bindable> bind) noexcept(!IS_DEBUG)
+void Drawable::AddBind(std::unique_ptr<Bindable> bind) noexcept
 {
 	//Check that we arent trying to add an index buffer
 	assert("MUST use AddIndexBuffer to bind index buffer" && typeid(*bind) != typeid(IndexBuffer));

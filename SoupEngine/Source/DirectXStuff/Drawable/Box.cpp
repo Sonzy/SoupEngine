@@ -6,6 +6,7 @@
 #include "DirectXStuff/Bindable/InputLayout.h"
 #include "DirectXStuff/Bindable/Topology.h"
 #include "DirectXStuff/Bindable/TransformCBuffer.h"
+#include "DirectXStuff/Bindable/IndexBuffer.h"
 
 Box::Box(Graphics & gfx, std::mt19937 & rng,
 	std::uniform_real_distribution<float>& aDist,
@@ -46,16 +47,17 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 		{ 1.0f, -1.0f, 1.0f },
 		{ -1.0f, 1.0f, 1.0f },
 		{ 1.0f, 1.0f, 1.0f },
+
 	};
 	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
 
 
-	auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/BasicVShader.cso");
+	auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/BasicVShaderhlsl.cso");
 	auto vShaderByteCode = vShader->GetByteCode();
 	
 	//Bind the pixel and vertex shaders
 	AddBind(std::move(vShader));
-	AddBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/BasicPShader"));
+	AddBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/BasicPShader.cso"));
 
 	//Create and add index buffer
 	const std::vector<unsigned short> indices =
@@ -85,9 +87,9 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 	{
 		{
 			{1.0f, 0.0f, 1.0f},
-			{ 1.0f, 0.0f, 0.0f },
-			{ 0.0f, 1.0f, 0.0f },
-			{ 0.0f, 0.0f, 1.0f },
+			{ 1.0f, 0.0f, 0.0f },//Not being drawn
+			{ 0.0f, 1.0f, 0.0f },//Not being drawn
+			{ 0.0f, 0.0f, 1.0f },//Not being drawn
 			{ 1.0f, 1.0f, 0.0f },
 			{ 0.0f, 1.0f, 1.0f },
 		}
@@ -95,7 +97,7 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
 
 	//Bind the input layout description
-	const D3D11_INPUT_ELEMENT_DESC ied[] =
+	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 	{
 		{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
@@ -105,7 +107,7 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 	//Bind the transform cbuffer
-	AddBind(std::make_unique<TransformCBuffer>(gfx, this*));
+	AddBind(std::make_unique<TransformCBuffer>(gfx, *this));
 }
 
 void Box::Update(float deltaTime) noexcept

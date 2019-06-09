@@ -7,7 +7,7 @@ class VertexBuffer : public Bindable
 public:
 	template<class V>
 	VertexBuffer(Graphics& gfx, const std::vector<V>& vertices)
-		:stride(sizeof(vertices))
+		:stride(sizeof(V))
 	{
 		INFOMAN(gfx);
 
@@ -16,13 +16,13 @@ public:
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		bufferDesc.CPUAccessFlags = 0u;
 		bufferDesc.MiscFlags = 0u;
-		bufferDesc.ByteWidth = sizeof(V) * vertices.size());
+		bufferDesc.ByteWidth = UINT(sizeof(V) * vertices.size());
 		bufferDesc.StructureByteStride = sizeof(V);
 
 		D3D11_SUBRESOURCE_DATA subData = {};
 		subData.pSysMem = vertices.data();
 
-		GFX_THROW_INFO(device->CreateBuffer(&bufferDesc, &subData, &vertexBuffer));
+		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&bufferDesc, &subData, &vertexBuffer));
 	}
 
 

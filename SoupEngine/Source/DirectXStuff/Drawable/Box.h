@@ -2,7 +2,7 @@
 #include "Drawable.h"
 #include <random>
 
-class Box : Drawable
+class Box : public Drawable
 {
 public:
 	Box(Graphics& gfx, std::mt19937& rng,

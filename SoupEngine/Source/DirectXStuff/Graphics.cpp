@@ -16,6 +16,7 @@ namespace dx = DirectX;
 #pragma comment(lib, "D3DCompiler.lib")
 
 Graphics::Graphics(HWND hWnd)
+	: projection(DirectX::FXMMATRIX())
 {
 	// USed to check D3D function stuff
 	HRESULT hr;
@@ -99,6 +100,17 @@ Graphics::Graphics(HWND hWnd)
 
 	//bind the depth stencil view to om
 	context->OMSetRenderTargets(1u, renderTarget.GetAddressOf(), depthStencilView.Get());
+
+	//Setup viewport
+	D3D11_VIEWPORT vp;
+	vp.Width = 800.0f;
+	vp.Height = 800.0f;
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	vp.TopLeftX = 0.0f;
+	vp.TopLeftY = 0.0f;
+
+	context->RSSetViewports(1u, &vp);
 } 
 
 void Graphics::EndFrame()
@@ -134,9 +146,9 @@ void Graphics::DrawIndexed(UINT count)
 	GFX_THROW_INFO_ONLY(context->DrawIndexed(count, 0u, 0u));
 }
 
-void Graphics::SetProjection(DirectX::FXMMATRIX proj) noexcept
+void Graphics::SetProjection(DirectX::FXMMATRIX projec) noexcept
 {
-	projection = proj;
+	projection = projec;
 }
 
 DirectX::FXMMATRIX Graphics::GetProjection() const noexcept

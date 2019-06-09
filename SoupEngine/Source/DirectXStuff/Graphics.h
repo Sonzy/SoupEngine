@@ -2,9 +2,11 @@
 #include "Window/WindowsMacroUndefs.h"
 #include "Error Handling/DXGIInfoManager.h"
 #include <DirectXMath.h>
+#include <d3dcompiler.h>
 #include <d3d11.h>
 #include <vector>
 #include <wrl.h>
+#include <memory>
 
 
 class Graphics
@@ -30,7 +32,7 @@ private:
 	DXGIInfoManager infoManager;
 #endif 
 
-	DirectX::FXMMATRIX projection;
+	DirectX::XMMATRIX projection;
 
 	// Used to create and allocate stuff
 	Microsoft::WRL::ComPtr<ID3D11Device> device = nullptr;

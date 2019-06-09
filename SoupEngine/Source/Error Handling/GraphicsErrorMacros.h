@@ -18,9 +18,7 @@
 
 // If we are in debug mode, we import infomanager into local scope
 #ifdef NDEBUG
-#define INFOMAN() HRESULT hr
 #define INFOMAN(gfx) HRESULT hr
 #else
-#define INFOMAN() HRESULT hr; DXGIInfoManager& infoManager = GetInfoManager()
 #define INFOMAN(gfx) HRESULT hr; DXGIInfoManager& infoManager = GetInfoManager((gfx))
 #endif	
