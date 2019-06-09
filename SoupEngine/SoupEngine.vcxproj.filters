@@ -69,6 +69,17 @@
       <Filter>Source\DirectX Stuff</Filter>
     </ClCompile>
     <ClCompile Include="Source\DirectXStuff\Bindable\Bindable.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\IndexBuffer.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\InputLayout.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\PixelShader.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Topology.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\TransformCBuffer.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\VertexBuffer.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\VertexShader.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\ConstantBuffer.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Drawable.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Box.cpp" />
+    <ClCompile Include="Source\Error Handling\Exceptions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -111,6 +122,17 @@
       <Filter>Source\DirectX Stuff</Filter>
     </ClInclude>
     <ClInclude Include="Source\DirectXStuff\Bindable\Bindable.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\IndexBuffer.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\InputLayout.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\PixelShader.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\VertexShader.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\VertexBuffer.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Topology.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\TransformCBuffer.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\ConstantBuffer.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Drawable.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Box.h" />
+    <ClInclude Include="Source\Error Handling\Exceptions.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
