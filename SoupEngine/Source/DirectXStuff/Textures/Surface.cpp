@@ -1,6 +1,7 @@
 #define FULL_WINTARD
 
 #include "Surface.h"
+#include <assert.h>
 #include <algorithm>
 
 namespace Gdiplus

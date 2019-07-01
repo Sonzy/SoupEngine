@@ -1,10 +1,11 @@
 #include "Sheet.h"
 #include "BindableBase.h"
-#include "Error Handling/GraphicsErrorMacros.h"
-#include "Plane.h"
 #include "DirectXStuff/Textures/Surface.h"
 #include "DirectXStuff/Bindable/Texture.h"
 #include "DirectXStuff/Bindable/Sampler.h"
+#include "Error Handling/GraphicsErrorMacros.h"
+#include "Plane.h"
+
 
 Sheet::Sheet(Graphics& gfx,	std::mt19937& rng,	std::uniform_real_distribution<float>& adist,	std::uniform_real_distribution<float>& ddist,
 	std::uniform_real_distribution<float>& odist,	std::uniform_real_distribution<float>& rdist)
