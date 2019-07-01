@@ -6,6 +6,8 @@
 //Include to do with targeting?
 #include <sdkddkver.h>
 
+#ifndef FULL_WINTARD
+
 #define WIN32_LEANANDMEAN
 #define NOGDICAPMASKS
 #define NOSYSMETRICS
@@ -39,7 +41,9 @@
 #define NOPROXYSTUB
 #define NOIMAGE
 #define NOTAPE
+#endif // !FULL_WINTARD
 
+#define NOMINMAX
 #define STRICT
 
 #include <Windows.h>

@@ -137,6 +137,7 @@
     <ResourceCompile Include="SoupEngine.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\Assets\kappa50.png" />
     <Image Include="..\..\Assets\SoupEngineIcon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -146,17 +147,26 @@
     <ClCompile Include="Source\DirectXStuff\Bindable\IndexBuffer.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\InputLayout.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\PixelShader.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Sampler.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Texture.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\Topology.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\TransformCBuffer.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\VertexBuffer.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\VertexShader.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\BindableBase.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Box.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Drawable.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Melon.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Pyramid.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Sheet.cpp" />
     <ClCompile Include="Source\DirectXStuff\Graphics.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Textures\GDIPlusManager.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Textures\Surface.cpp" />
     <ClCompile Include="Source\Error Handling\dxerr.cpp" />
     <ClCompile Include="Source\Error Handling\DXGIInfoManager.cpp" />
     <ClCompile Include="Source\Error Handling\Exceptions.cpp" />
     <ClCompile Include="Source\Error Handling\SoupException.cpp" />
+    <ClCompile Include="Source\Error Handling\SurfaceException.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Other\SoupTimer.cpp" />
     <ClCompile Include="Source\Window\Keyboard.cpp" />
@@ -170,18 +180,35 @@
     <ClInclude Include="Source\DirectXStuff\Bindable\IndexBuffer.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\InputLayout.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\PixelShader.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Sampler.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Texture.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\Topology.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\TransformCBuffer.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\VertexBuffer.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\VertexShader.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\BindableBase.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Box.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cone.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cube.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Drawable.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\DrawableBase.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\IndexedTriangleList.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Melon.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Plane.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Prism.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Pyramid.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Sheet.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\SoupMath.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Sphere.h" />
     <ClInclude Include="Source\DirectXStuff\Graphics.h" />
+    <ClInclude Include="Source\DirectXStuff\Textures\GDIPlusManager.h" />
+    <ClInclude Include="Source\DirectXStuff\Textures\Surface.h" />
     <ClInclude Include="Source\Error Handling\dxerr.h" />
     <ClInclude Include="Source\Error Handling\DXGIInfoManager.h" />
     <ClInclude Include="Source\Error Handling\Exceptions.h" />
     <ClInclude Include="Source\Error Handling\GraphicsErrorMacros.h" />
     <ClInclude Include="Source\Error Handling\SoupException.h" />
+    <ClInclude Include="Source\Error Handling\SurfaceException.h" />
     <ClInclude Include="Source\Error Handling\WindowErrorMacros.h" />
     <ClInclude Include="Source\Other\SoupTimer.h" />
     <ClInclude Include="Source\resource.h" />
@@ -196,17 +223,47 @@
     <None Include="Source\Error Handling\DXTrace.inl" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\Shaders\BasicPShader.hlsl">
+    <FxCompile Include="Source\Shaders\ColorIndexPS.hlsl">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Source\Shaders\BasicVShaderhlsl.hlsl">
+    <FxCompile Include="Source\Shaders\ColorIndexVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\ColorBlendPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\ColorBlendVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\TexturePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\TextureVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

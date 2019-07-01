@@ -1,18 +1,14 @@
 #include "Box.h"
-#include "DirectXStuff/Bindable/VertexBuffer.h"
-#include "DirectXStuff/Bindable/VertexShader.h"
-#include "DirectXStuff/Bindable/PixelShader.h"
-#include "DirectXStuff/Bindable/ConstantBuffer.h"
-#include "DirectXStuff/Bindable/InputLayout.h"
-#include "DirectXStuff/Bindable/Topology.h"
-#include "DirectXStuff/Bindable/TransformCBuffer.h"
-#include "DirectXStuff/Bindable/IndexBuffer.h"
+
+#include "BindableBase.h"
+#include "Cube.h"
 
 Box::Box(Graphics & gfx, std::mt19937 & rng,
 	std::uniform_real_distribution<float>& aDist,
 	std::uniform_real_distribution<float>& dDist,
 	std::uniform_real_distribution<float>& oDist,
-	std::uniform_real_distribution<float>& rDist)
+	std::uniform_real_distribution<float>& rDist,
+	std::uniform_real_distribution<float>& bdist)
 	:
 	r(rDist(rng)),
 	dRoll(dDist(rng)),
@@ -25,89 +21,75 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 	theta(aDist(rng)),
 	phi(aDist(rng))
 {
-	//Create all the bindables
-	struct Vertex
+	if (!IsStaticInitialised())
 	{
-		struct
+		//Create all the bindables
+		struct Vertex
 		{
-			float x;
-			float y;
-			float z;
-		} pos;
-	};
+			DirectX::XMFLOAT3 pos;
+		};
 
-	//Create vertices for box mesh
-	const std::vector<Vertex> vertices = 
-	{
-		{ -1.0f, -1.0f, -1.0f },
-		{ 1.0f, -1.0f, -1.0f },
-		{ -1.0f, 1.0f, -1.0f },
-		{ 1.0f, 1.0f, -1.0f },
-		{ -1.0f, -1.0f, 1.0f },
-		{ 1.0f, -1.0f, 1.0f },
-		{ -1.0f, 1.0f, 1.0f },
-		{ 1.0f, 1.0f, 1.0f },
+		auto model = Cube::Make<Vertex>();
+		model.Transform(DirectX::XMMatrixScaling(1.0f, 1.0f, 1.2f));
 
-	};
-	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
+		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
 
 
-	auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/BasicVShaderhlsl.cso");
-	auto vShaderByteCode = vShader->GetByteCode();
-	
-	//Bind the pixel and vertex shaders
-	AddBind(std::move(vShader));
-	AddBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/BasicPShader.cso"));
+		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/BasicVShaderhlsl.cso");
+		auto vShaderByteCode = vShader->GetByteCode();
 
-	//Create and add index buffer
-	const std::vector<unsigned short> indices =
-	{
-		0,2,1, 2,3,1,
-		1,3,5, 3,7,5,
-		2,6,3, 3,6,7,
-		4,5,7, 4,7,6,
-		0,4,2, 2,4,6,
-		0,1,4, 1,5,4
-	};
-	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, indices));
+		//Bind the pixel and vertex shaders
+		AddStaticBind(std::move(vShader));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/BasicPShader.cso"));
 
-	//Create a constant buffer to hold the colors
-	struct ConstantBuffer2
-	{
-		struct
+		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
+
+		//Create a constant buffer to hold the colors
+		struct ConstantBuffer2
 		{
-			float r;
-			float g;
-			float b;
-			float a;
-		} face_colors[6];
-	};
+			struct
+			{
+				float r;
+				float g;
+				float b;
+				float a;
+			} face_colors[8];
+		};
 
-	const ConstantBuffer2 cb2 = 
-	{
+		const ConstantBuffer2 cb2 =
 		{
-			{1.0f, 0.0f, 1.0f},
-			{ 1.0f, 0.0f, 0.0f },//Not being drawn
-			{ 0.0f, 1.0f, 0.0f },//Not being drawn
-			{ 0.0f, 0.0f, 1.0f },//Not being drawn
-			{ 1.0f, 1.0f, 0.0f },
-			{ 0.0f, 1.0f, 1.0f },
-		}
-	};
-	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
+			{
+				{ 1.0f,1.0f,1.0f },
+				{ 1.0f,0.0f,0.0f },
+				{ 0.0f,1.0f,0.0f },
+				{ 1.0f,1.0f,0.0f },
+				{ 0.0f,0.0f,1.0f },
+				{ 1.0f,0.0f,1.0f },
+				{ 0.0f,1.0f,1.0f },
+				{ 0.0f,0.0f,0.0f },
+			}
+		};
+		AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
 
-	//Bind the input layout description
-	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
-	{
-		{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	AddBind(std::make_unique<InputLayout>(gfx, ied, vShaderByteCode));
+		//Bind the input layout description
+		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+		{
+			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
+		AddStaticBind(std::make_unique<InputLayout>(gfx, ied, vShaderByteCode));
 
-	//Bind the topology
-	AddBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+		//Bind the topology
+		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+
+	}
+	else
+		SetIndexFromStatic();
+
 
 	//Bind the transform cbuffer
 	AddBind(std::make_unique<TransformCBuffer>(gfx, *this));
+
+	DirectX::XMStoreFloat3x3(&mTransform, DirectX::XMMatrixScaling(1.0f, 1.0f, bdist(rng)));
 }
 
 void Box::Update(float deltaTime) noexcept
@@ -122,7 +104,8 @@ void Box::Update(float deltaTime) noexcept
 
 DirectX::XMMATRIX Box::GetTransformXM() const noexcept
 {
-	return DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) * //Rotate around box centre
+	return DirectX::XMLoadFloat3x3(&mTransform) *
+		DirectX::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) * //Rotate around box centre
 		DirectX::XMMatrixTranslation(r, 0.0f, 0.0f) * //Move relative to origin
 		DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi) * //Rotate around world centre
 		DirectX::XMMatrixTranslation(0.0f, 0.0f, 20.0f); //Move relative to camera

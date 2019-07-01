@@ -36,6 +36,9 @@
     <Image Include="..\..\Assets\SoupEngineIcon.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\Assets\kappa50.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -80,6 +83,15 @@
     <ClCompile Include="Source\DirectXStuff\Drawable\Drawable.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Box.cpp" />
     <ClCompile Include="Source\Error Handling\Exceptions.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Pyramid.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\BindableBase.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Melon.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Textures\Surface.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Textures\GDIPlusManager.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Texture.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Bindable\Sampler.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Sheet.cpp" />
+    <ClCompile Include="Source\Error Handling\SurfaceException.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -133,6 +145,23 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\Drawable.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Box.h" />
     <ClInclude Include="Source\Error Handling\Exceptions.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\DrawableBase.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Plane.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cone.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Prism.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Sphere.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\SoupMath.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\IndexedTriangleList.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cube.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Melon.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Pyramid.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\BindableBase.h" />
+    <ClInclude Include="Source\DirectXStuff\Textures\Surface.h" />
+    <ClInclude Include="Source\DirectXStuff\Textures\GDIPlusManager.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Texture.h" />
+    <ClInclude Include="Source\DirectXStuff\Bindable\Sampler.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Sheet.h" />
+    <ClInclude Include="Source\Error Handling\SurfaceException.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
@@ -146,11 +175,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Source\Shaders\BasicPShader.hlsl">
+    <FxCompile Include="Source\Shaders\ColorBlendPS.hlsl" />
+    <FxCompile Include="Source\Shaders\ColorBlendVS.hlsl" />
+    <FxCompile Include="Source\Shaders\ColorIndexPS.hlsl">
       <Filter>Source\Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="Source\Shaders\BasicVShaderhlsl.hlsl">
+    <FxCompile Include="Source\Shaders\ColorIndexVS.hlsl">
       <Filter>Source\Shaders</Filter>
     </FxCompile>
+    <FxCompile Include="Source\Shaders\TexturePS.hlsl" />
+    <FxCompile Include="Source\Shaders\TextureVS.hlsl" />
   </ItemGroup>
 </Project>

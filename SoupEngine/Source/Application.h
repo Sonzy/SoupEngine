@@ -1,7 +1,7 @@
 #pragma once
 #include "Window/Window.h"
 #include "Other/SoupTimer.h"
-#include "DirectXStuff/Drawable/Box.h"
+#include "DirectXStuff/Drawable/Drawable.h"
 
 class Application
 {
@@ -16,7 +16,7 @@ private:
 	Window window;
 
 	SoupTimer timer;
-
-	std::vector<std::unique_ptr<Box>> boxes;
+	std::vector<std::unique_ptr<Drawable>> drawables;
+	static constexpr size_t nDrawables = 180;
 };
 
