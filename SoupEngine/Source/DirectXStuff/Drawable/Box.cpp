@@ -35,12 +35,12 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
 
 
-		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/BasicVShaderhlsl.cso");
+		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/ColorIndexVS.cso");
 		auto vShaderByteCode = vShader->GetByteCode();
 
 		//Bind the pixel and vertex shaders
 		AddStaticBind(std::move(vShader));
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/BasicPShader.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/ColorIndexPS.cso"));
 
 		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
 
