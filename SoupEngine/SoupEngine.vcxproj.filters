@@ -92,6 +92,15 @@
     <ClCompile Include="Source\DirectXStuff\Bindable\Sampler.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Sheet.cpp" />
     <ClCompile Include="Source\Error Handling\SurfaceException.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\SkinnedBox.cpp" />
+    <ClCompile Include="Source\ImGui\imgui.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\ImGui\ImguiManager.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Source\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Source\Other\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -162,6 +171,17 @@
     <ClInclude Include="Source\DirectXStuff\Bindable\Sampler.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Sheet.h" />
     <ClInclude Include="Source\Error Handling\SurfaceException.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\SkinnedBox.h" />
+    <ClInclude Include="Source\ImGui\imconfig.h" />
+    <ClInclude Include="Source\ImGui\imgui.h" />
+    <ClInclude Include="Source\ImGui\imgui_internal.h" />
+    <ClInclude Include="Source\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="Source\ImGui\imstb_textedit.h" />
+    <ClInclude Include="Source\ImGui\imstb_truetype.h" />
+    <ClInclude Include="Source\ImGui\ImguiManager.h" />
+    <ClInclude Include="Source\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="Source\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="Source\Other\Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">

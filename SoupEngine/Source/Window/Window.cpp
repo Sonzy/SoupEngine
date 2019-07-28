@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "resource.h"
 #include <sstream>
+#include "ImGui/imgui_impl_win32.h"
 
 //Init static var
 Window::WindowClass Window::WindowClass::windowClass;
@@ -25,6 +26,8 @@ Window::Window(int width, int height, const char * name)
 
 	//Show the window
 	ShowWindow(hWnd, SW_SHOW);
+	//Initialise ImGui
+	ImGui_ImplWin32_Init(hWnd);
 	//Create graphics
 	gfx = std::make_unique<Graphics>(hWnd);
 
@@ -34,6 +37,7 @@ Window::Window(int width, int height, const char * name)
 
 Window::~Window()
 {
+	ImGui_ImplWin32_Shutdown();
 	DestroyWindow(hWnd);
 }
 
@@ -103,6 +107,11 @@ LRESULT WINAPI Window::HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM
 
 LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
+	const auto guiIO = ImGui::GetIO();
+
 	switch (msg)
 	{
 	//Window Messages================================
@@ -114,19 +123,38 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	//Key Messages===================================
 	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN: //Not Case Sensitive
+
+		//If the GUI wants to capture the keyboard, let it over the app
+		if (guiIO.WantCaptureKeyboard)
+			break;
+
 		if(!(lParam & 0x40000000) || keyboard.IsAutorepeatEnabled())
 			keyboard.OnKeyPressed(static_cast<unsigned char>(wParam));
 		break;
 	case WM_SYSKEYUP:
 	case WM_KEYUP:
+
+		//If the GUI wants to capture the keyboard, let it over the app
+		if (guiIO.WantCaptureKeyboard)
+			break;
+
 		keyboard.OnKeyReleased(static_cast<unsigned char>(wParam));
 		break;
 	case WM_CHAR: // Case sensitive
+
+		 //If the GUI wants to capture the keyboard, let it over the app
+		if (guiIO.WantCaptureKeyboard)
+			break;
+
 		keyboard.OnChar(static_cast<unsigned char>(wParam));
 		break;
 	//Mouse Messages==================================
 	case WM_MOUSEMOVE:
 	{
+		//If the GUI wants to capture the keyboard, let it over the app
+		if (guiIO.WantCaptureMouse)
+			break;
+
 		const POINTS points = MAKEPOINTS(lParam);
 		//Check if we are in the window
 		if (points.x >= 0 && points.x < width && points.y >= 0 && points.y < height)

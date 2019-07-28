@@ -20,19 +20,31 @@ public:
 	~Graphics() = default;
 
 	void EndFrame();
-	void ClearBuffer(float red, float green, float blue) noexcept;
+	void BeginFrame(float r, float g, float b, float a);
 	void DrawIndexed(UINT count);
 
 	void SetProjection(DirectX::FXMMATRIX proj) noexcept;
 	DirectX::FXMMATRIX GetProjection() const noexcept;
+	void SetCamera(DirectX::FXMMATRIX cam) noexcept;
+	DirectX::XMMATRIX GetCamera() const noexcept;
+
+	//GUI stuff
+	void EnableGUI() noexcept;
+	void DisableGUI() noexcept;
+
+	bool IsGUIEnabled() const noexcept;
 
 private:
+	DirectX::XMMATRIX projection;
+	DirectX::XMMATRIX camera;
+
+	bool GUIEnabled = true;
 
 #ifndef NDEBUG
 	DXGIInfoManager infoManager;
 #endif 
 
-	DirectX::XMMATRIX projection;
+
 
 	// Used to create and allocate stuff
 	Microsoft::WRL::ComPtr<ID3D11Device> device = nullptr;

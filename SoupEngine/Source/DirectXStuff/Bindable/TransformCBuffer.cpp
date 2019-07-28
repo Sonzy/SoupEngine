@@ -10,7 +10,10 @@ TransformCBuffer::TransformCBuffer(Graphics & gfx, const Drawable & parent)
 
 void TransformCBuffer::Bind(Graphics& gfx) noexcept
 {
-	vcBuffer->Update(gfx, DirectX::XMMatrixTranspose(parent.GetTransformXM() * gfx.GetProjection()));
+	vcBuffer->Update(gfx, DirectX::XMMatrixTranspose(
+		parent.GetTransformXM() *
+		gfx.GetCamera() *
+		gfx.GetProjection()));
 	vcBuffer->Bind(gfx);
 }
 

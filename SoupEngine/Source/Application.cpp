@@ -9,12 +9,16 @@
 #include "DirectXStuff/Drawable/Box.h"
 #include "DirectXStuff/Drawable/Pyramid.h"
 #include "DirectXStuff/Drawable/Sheet.h"
+#include "DirectXStuff/Drawable/SkinnedBox.h"
 
-//#include "DirectXStuff/Textures/GDIPlusManager.h"
-//#include "DirectXStuff/Textures/Surface.h"
+#include "DirectXStuff/Textures/GDIPlusManager.h"
+#include "DirectXStuff/Textures/Surface.h"
 
+#include "ImGui/imgui.h"
+#include "ImGui/imgui_impl_dx11.h"
+#include "ImGui/imgui_impl_win32.h"
 
-//GDIPlusManager gdipm;
+GDIPlusManager gdipm;
 
 Application::Application()
 	:window(800, 600, "Soup Window")
@@ -33,7 +37,7 @@ Application::Application()
 			case 0:
 				return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist);
 			case 1:
-				return std::make_unique<Box>(gfx, rng, adist, ddist,odist, rdist, bdist);
+				return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist,odist, rdist);
 			case 2:
 				return std::make_unique<Melon>(gfx, rng, adist, ddist,odist, rdist, longdist, latdist);
 			case 3:
@@ -61,8 +65,6 @@ Application::Application()
 	drawables.reserve(nDrawables);
 	std::generate_n(std::back_inserter(drawables), nDrawables, f);
 
-	//const auto s = Surface::FromFile("Images\\kappa50.png");
-
 	window.GetGraphics().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
 
@@ -80,8 +82,10 @@ int Application::InitGameLoop()
 
 void Application::Tick()
 {	
-	auto deltaTime = timer.Mark();
-	window.GetGraphics().ClearBuffer(0.0f, 0.0f, 1.0f);
+	auto deltaTime = timer.Mark() * simSpeed;
+
+	window.GetGraphics().BeginFrame(0.0f, 0.0f, 1.0f, 1.0f);
+	window.GetGraphics().SetCamera(cam.GetMatrix());
 
 	for (auto& d : drawables)
 	{
@@ -89,5 +93,25 @@ void Application::Tick()
 		d->Draw(window.GetGraphics());
 	}
 
+	//Render simspeed window
+	if (ImGui::Begin("Sim Speed"))
+	{
+		ImGui::SliderFloat("Speed", &simSpeed, 0.0f, 5.0f);
+		ImGui::Text("App Average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	}
+	ImGui::End();
+
+	cam.SpawnControlWindow();
+
 	window.GetGraphics().EndFrame();
 }
+
+void Application::RenderDemoWindow()
+{
+	static bool show_demo_window = true;
+	if (show_demo_window && window.GetGraphics().IsGUIEnabled())
+	{
+		ImGui::ShowDemoWindow(&show_demo_window);
+	}
+}
+

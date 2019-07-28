@@ -2,6 +2,8 @@
 #include "Window/Window.h"
 #include "Other/SoupTimer.h"
 #include "DirectXStuff/Drawable/Drawable.h"
+#include "ImGui/ImguiManager.h"
+#include "Other/Camera.h"
 
 class Application
 {
@@ -13,10 +15,15 @@ public:
 private:
 	// Runs a single frame
 	void Tick();
-	Window window;
+	void RenderDemoWindow();
 
+	ImguiManager imGuiManager;
 	SoupTimer timer;
 	std::vector<std::unique_ptr<Drawable>> drawables;
+	Window window;
 	static constexpr size_t nDrawables = 180;
+	Camera cam;
+
+	float simSpeed = 1.0f;
 };
 

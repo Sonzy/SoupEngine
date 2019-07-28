@@ -26,21 +26,21 @@ Sheet::Sheet(Graphics& gfx,	std::mt19937& rng,	std::uniform_real_distribution<fl
 		};
 		auto model = Plane::Make<Vertex>();
 		model.vertices[0].tex = { 0.0f,0.0f };
-		model.vertices[1].tex = { 1.0f,0.0f };
-		model.vertices[2].tex = { 0.0f,1.0f };
-		model.vertices[3].tex = { 1.0f,1.0f };
+		model.vertices[1].tex = { 2.0f,0.0f };
+		model.vertices[2].tex = { 0.0f,2.0f };
+		model.vertices[3].tex = { 2.0f,2.0f };
 
-		AddStaticBind(std::make_unique<Texture>(gfx, Surface::FromFile("Images\\kappa50.png")));
+		AddStaticBind(std::make_unique<Texture>(gfx, Surface::FromFile("Source\\Images\\kappa50.png")));
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
 
 		AddStaticBind(std::make_unique<Sampler>(gfx));
 
-		auto pvs = std::make_unique<VertexShader>(gfx, L"TextureVS.cso");
+		auto pvs = std::make_unique<VertexShader>(gfx, L"Source/Shaders/TextureVS.cso");
 		auto pvsbc = pvs->GetByteCode();
 		AddStaticBind(std::move(pvs));
 
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"TexturePS.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/TexturePS.cso"));
 
 		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
 
@@ -76,6 +76,5 @@ DirectX::XMMATRIX Sheet::GetTransformXM() const noexcept
 	namespace dx = DirectX;
 	return dx::XMMatrixRotationRollPitchYaw(pitch, yaw, roll) *
 		dx::XMMatrixTranslation(r, 0.0f, 0.0f) *
-		dx::XMMatrixRotationRollPitchYaw(theta, phi, chi) *
-		dx::XMMatrixTranslation(0.0f, 0.0f, 20.0f);
+		dx::XMMatrixRotationRollPitchYaw(theta, phi, chi);
 }
