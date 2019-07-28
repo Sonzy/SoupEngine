@@ -27,54 +27,29 @@ Box::Box(Graphics & gfx, std::mt19937 & rng,
 		struct Vertex
 		{
 			DirectX::XMFLOAT3 pos;
+			DirectX::XMFLOAT3 n;
 		};
 
-		auto model = Cube::Make<Vertex>();
-		model.Transform(DirectX::XMMatrixScaling(1.0f, 1.0f, 1.2f));
+		auto model = Cube::MakeIndependent<Vertex>();
+		model.SetNormalsIndependentFlat();
 
 		AddStaticBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
 
 
-		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/ColorIndexVS.cso");
+		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/PerPixelVS.cso");
 		auto vShaderByteCode = vShader->GetByteCode();
 
 		//Bind the pixel and vertex shaders
 		AddStaticBind(std::move(vShader));
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/ColorIndexPS.cso"));
+		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/PerPixelPS.cso"));
 
 		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
-
-		//Create a constant buffer to hold the colors
-		struct ConstantBuffer2
-		{
-			struct
-			{
-				float r;
-				float g;
-				float b;
-				float a;
-			} face_colors[8];
-		};
-
-		const ConstantBuffer2 cb2 =
-		{
-			{
-				{ 1.0f,1.0f,1.0f },
-				{ 1.0f,0.0f,0.0f },
-				{ 0.0f,1.0f,0.0f },
-				{ 1.0f,1.0f,0.0f },
-				{ 0.0f,0.0f,1.0f },
-				{ 1.0f,0.0f,1.0f },
-				{ 0.0f,1.0f,1.0f },
-				{ 0.0f,0.0f,0.0f },
-			}
-		};
-		AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
 
 		//Bind the input layout description
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{
-			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{ "Normal", 0, DXGI_FORMAT_R32G32B32_FLOAT , 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		};
 		AddStaticBind(std::make_unique<InputLayout>(gfx, ied, vShaderByteCode));
 

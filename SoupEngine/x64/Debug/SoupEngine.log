@@ -1,2 +1,4 @@
-﻿  Application.cpp
+﻿D:\Personal Projects\SoupEngine\SoupEngine\Source\Shaders\PerPixelPS.hlsl(25,17-114): warning X3206: implicit truncation of vector type
+  
+  compilation object save succeeded; see D:\Personal Projects\SoupEngine\SoupEngine\Source\Shaders\PerPixelPS.cso
   SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe

@@ -101,6 +101,8 @@
     <ClCompile Include="Source\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="Source\ImGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="Source\Other\Camera.cpp" />
+    <ClCompile Include="Source\DirectXStuff\PointLight\PointLight.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\SolidSphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -182,6 +184,8 @@
     <ClInclude Include="Source\ImGui\imgui_impl_win32.h" />
     <ClInclude Include="Source\ImGui\imgui_impl_dx11.h" />
     <ClInclude Include="Source\Other\Camera.h" />
+    <ClInclude Include="Source\DirectXStuff\PointLight\PointLight.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\SolidSphere.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
@@ -205,5 +209,9 @@
     </FxCompile>
     <FxCompile Include="Source\Shaders\TexturePS.hlsl" />
     <FxCompile Include="Source\Shaders\TextureVS.hlsl" />
+    <FxCompile Include="Source\Shaders\PerPixelPS.hlsl" />
+    <FxCompile Include="Source\Shaders\PerPixelVS.hlsl" />
+    <FxCompile Include="Source\Shaders\SolidPS.hlsl" />
+    <FxCompile Include="Source\Shaders\SolidVS.hlsl" />
   </ItemGroup>
 </Project>

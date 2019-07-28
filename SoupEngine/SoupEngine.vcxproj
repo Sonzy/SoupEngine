@@ -160,7 +160,9 @@
     <ClCompile Include="Source\DirectXStuff\Drawable\Pyramid.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Sheet.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\SkinnedBox.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\SolidSphere.cpp" />
     <ClCompile Include="Source\DirectXStuff\Graphics.cpp" />
+    <ClCompile Include="Source\DirectXStuff\PointLight\PointLight.cpp" />
     <ClCompile Include="Source\DirectXStuff\Textures\GDIPlusManager.cpp" />
     <ClCompile Include="Source\DirectXStuff\Textures\Surface.cpp" />
     <ClCompile Include="Source\Error Handling\dxerr.cpp" />
@@ -208,9 +210,11 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\Pyramid.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Sheet.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\SkinnedBox.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\SolidSphere.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\SoupMath.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Sphere.h" />
     <ClInclude Include="Source\DirectXStuff\Graphics.h" />
+    <ClInclude Include="Source\DirectXStuff\PointLight\PointLight.h" />
     <ClInclude Include="Source\DirectXStuff\Textures\GDIPlusManager.h" />
     <ClInclude Include="Source\DirectXStuff\Textures\Surface.h" />
     <ClInclude Include="Source\Error Handling\dxerr.h" />
@@ -276,6 +280,38 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\PerPixelPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\PerPixelVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\SolidPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\SolidVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>

@@ -21,7 +21,7 @@
 GDIPlusManager gdipm;
 
 Application::Application()
-	:window(800, 600, "Soup Window")
+	:window(800, 600, "Soup Window"), light(window.GetGraphics())
 {
 	class Factory
 	{
@@ -32,20 +32,8 @@ Application::Application()
 
 		std::unique_ptr<Drawable> operator()()
 		{
-			switch (typedist(rng))
-			{
-			case 0:
-				return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist);
-			case 1:
-				return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist,odist, rdist);
-			case 2:
-				return std::make_unique<Melon>(gfx, rng, adist, ddist,odist, rdist, longdist, latdist);
-			case 3:
-				return std::make_unique<Sheet>(gfx, rng, adist, ddist, odist, rdist);
-			default:
-				assert(false && "bad drawable type in factory");
-				return {};
-			}
+			return std::make_unique<Box>(gfx, rng, adist, ddist, odist, rdist, bdist);
+			//return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist, odist, rdist);
 		}	
 
 	private:
@@ -84,14 +72,16 @@ void Application::Tick()
 {	
 	auto deltaTime = timer.Mark() * simSpeed;
 
-	window.GetGraphics().BeginFrame(0.0f, 0.0f, 1.0f, 1.0f);
+	window.GetGraphics().BeginFrame(0.0f, 0.0f, 0.20f, 1.0f);
 	window.GetGraphics().SetCamera(cam.GetMatrix());
+	light.Bind(window.GetGraphics());
 
 	for (auto& d : drawables)
 	{
 		d->Update(window.keyboard.IsKeyPressed(VK_SPACE) ? 0.0f : deltaTime);
 		d->Draw(window.GetGraphics());
 	}
+	light.Draw(window.GetGraphics());
 
 	//Render simspeed window
 	if (ImGui::Begin("Sim Speed"))
@@ -102,6 +92,7 @@ void Application::Tick()
 	ImGui::End();
 
 	cam.SpawnControlWindow();
+	light.SpawnControlWindow();
 
 	window.GetGraphics().EndFrame();
 }
