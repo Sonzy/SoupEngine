@@ -189,6 +189,45 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\SolidSphere.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\TestObject.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Cylinder.h" />
+    <ClInclude Include="Source\Assimp\Compiler\poppack1.h" />
+    <ClInclude Include="Source\Assimp\Compiler\pstdint.h" />
+    <ClInclude Include="Source\Assimp\Compiler\pushpack1.h" />
+    <ClInclude Include="Source\Assimp\ai_assert.h" />
+    <ClInclude Include="Source\Assimp\anim.h" />
+    <ClInclude Include="Source\Assimp\camera.h" />
+    <ClInclude Include="Source\Assimp\cfileio.h" />
+    <ClInclude Include="Source\Assimp\cimport.h" />
+    <ClInclude Include="Source\Assimp\color4.h" />
+    <ClInclude Include="Source\Assimp\config.h" />
+    <ClInclude Include="Source\Assimp\DefaultIOStream.h" />
+    <ClInclude Include="Source\Assimp\DefaultIOSystem.h" />
+    <ClInclude Include="Source\Assimp\DefaultLogger.hpp" />
+    <ClInclude Include="Source\Assimp\Defines.h" />
+    <ClInclude Include="Source\Assimp\defs.h" />
+    <ClInclude Include="Source\Assimp\Exporter.hpp" />
+    <ClInclude Include="Source\Assimp\Importer.hpp" />
+    <ClInclude Include="Source\Assimp\importerdesc.h" />
+    <ClInclude Include="Source\Assimp\IOStream.hpp" />
+    <ClInclude Include="Source\Assimp\IOSystem.hpp" />
+    <ClInclude Include="Source\Assimp\light.h" />
+    <ClInclude Include="Source\Assimp\Logger.hpp" />
+    <ClInclude Include="Source\Assimp\LogStream.hpp" />
+    <ClInclude Include="Source\Assimp\material.h" />
+    <ClInclude Include="Source\Assimp\matrix3x3.h" />
+    <ClInclude Include="Source\Assimp\matrix4x4.h" />
+    <ClInclude Include="Source\Assimp\mesh.h" />
+    <ClInclude Include="Source\Assimp\metadata.h" />
+    <ClInclude Include="Source\Assimp\NullLogger.hpp" />
+    <ClInclude Include="Source\Assimp\postprocess.h" />
+    <ClInclude Include="Source\Assimp\ProgressHandler.hpp" />
+    <ClInclude Include="Source\Assimp\quaternion.h" />
+    <ClInclude Include="Source\Assimp\scene.h" />
+    <ClInclude Include="Source\Assimp\SceneCombiner.h" />
+    <ClInclude Include="Source\Assimp\texture.h" />
+    <ClInclude Include="Source\Assimp\types.h" />
+    <ClInclude Include="Source\Assimp\vector2.h" />
+    <ClInclude Include="Source\Assimp\vector3.h" />
+    <ClInclude Include="Source\Assimp\version.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
@@ -200,6 +239,13 @@
     <None Include="Source\Error Handling\DXTrace.inl">
       <Filter>Source\Error Handling</Filter>
     </None>
+    <None Include="Source\Assimp\color4.inl" />
+    <None Include="Source\Assimp\material.inl" />
+    <None Include="Source\Assimp\matrix3x3.inl" />
+    <None Include="Source\Assimp\matrix4x4.inl" />
+    <None Include="Source\Assimp\quaternion.inl" />
+    <None Include="Source\Assimp\vector2.inl" />
+    <None Include="Source\Assimp\vector3.inl" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Shaders\ColorBlendPS.hlsl" />
@@ -217,5 +263,9 @@
     <FxCompile Include="Source\Shaders\SolidPS.hlsl" />
     <FxCompile Include="Source\Shaders\SolidVS.hlsl" />
     <FxCompile Include="Source\Shaders\IndexedPerPixelPS.hlsl" />
+    <FxCompile Include="Source\Shaders\PerPixelColourBlendPS.hlsl" />
+    <FxCompile Include="Source\Shaders\PerPixelColorBlendVS.hlsl" />
+    <FxCompile Include="Source\Shaders\TexturedPerPixelPS.hlsl" />
+    <FxCompile Include="Source\Shaders\TexturedPerPixelVS.hlsl" />
   </ItemGroup>
 </Project>

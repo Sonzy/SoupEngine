@@ -1,2 +1,3 @@
-﻿  Box.cpp
+﻿  Application.cpp
+d:\personal projects\soupengine\soupengine\source\application.cpp(52): warning C4715: '`Application::Application'::`2'::Factory::operator()': not all control paths return a value
   SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe

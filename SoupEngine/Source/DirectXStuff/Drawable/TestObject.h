@@ -1,6 +1,7 @@
 #pragma once
 #include "DrawableBase.h"
 #include <random>
+#include "SoupMath.h"
 
 template<class T>
 class TestObject : public DrawableBase<T>
@@ -26,12 +27,12 @@ public:
 
 	void Update(float deltaTime) noexcept
 	{
-		roll += dRoll * deltaTime;
-		pitch += dPitch * deltaTime;
-		yaw += dYaw * deltaTime;
-		theta += dTheta * deltaTime;
-		phi += dPhi * deltaTime;
-		chi += dChi * deltaTime;
+		roll += wrap_angle(dRoll * deltaTime);
+		pitch += wrap_angle(dPitch * deltaTime);
+		yaw += wrap_angle(dYaw * deltaTime);
+		theta += wrap_angle(dTheta * deltaTime);
+		phi += wrap_angle(dPhi * deltaTime);
+		chi += wrap_angle(dChi * deltaTime);
 	}
 
 	DirectX::XMMATRIX GetTransformXM() const noexcept
@@ -41,7 +42,7 @@ public:
 			DirectX::XMMatrixRotationRollPitchYaw(theta, phi, chi); //Rotate around world centre
 	}
 
-private:
+protected:
 	//Position stuff
 	float r;
 	float pitch = 0.0f;

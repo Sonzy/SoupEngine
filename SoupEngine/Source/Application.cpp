@@ -19,6 +19,10 @@
 #include "ImGui/imgui_impl_dx11.h"
 #include "ImGui/imgui_impl_win32.h"
 
+#include <Assimp/Importer.hpp>
+#include <Assimp/scene.h>
+#include <Assimp/postprocess.h>
+
 GDIPlusManager gdipm;
 
 Application::Application()
@@ -40,6 +44,10 @@ Application::Application()
 				return std::make_unique<Box>(gfx, rng, adist, ddist, odist, rdist, bdist, mat);
 			case 1:
 				return std::make_unique<Cylinder>(gfx, rng, adist, ddist, odist, rdist, bdist, tdist);
+			case 2:
+				return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist, tdist);
+			case 3:
+				return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist, odist, rdist);
 			}
 		}	
 
@@ -53,12 +61,19 @@ Application::Application()
 			std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 			std::uniform_real_distribution<float> cdist{ 0.0f,1.0f };
 			std::uniform_int_distribution<int> tdist{ 3,30 };
-			std::uniform_int_distribution<int> spawnDistribution{0, 1};
+			std::uniform_int_distribution<int> spawnDistribution{0, 3};
 	};
 
 	Factory f(window.GetGraphics());
 	drawables.reserve(nDrawables);
 	std::generate_n(std::back_inserter(drawables), nDrawables, f);
+
+	//Store all boxes
+	for (auto& pd : drawables)
+	{
+		if (auto pb = dynamic_cast<Box*>(pd.get()))
+			boxes.push_back(pb);
+	}
 
 	window.GetGraphics().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
@@ -100,6 +115,7 @@ void Application::Tick()
 
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
+	RenderBoxMaterialControlWindow();
 
 	window.GetGraphics().EndFrame();
 }
@@ -110,6 +126,43 @@ void Application::RenderDemoWindow()
 	if (show_demo_window && window.GetGraphics().IsGUIEnabled())
 	{
 		ImGui::ShowDemoWindow(&show_demo_window);
+	}
+}
+
+void Application::RenderBoxMaterialControlWindow()
+{
+	if (ImGui::Begin("Boxes"))
+	{
+		const auto preview = comboBoxIndex ? std::to_string(*comboBoxIndex) : "Choose a box...";
+		if (ImGui::BeginCombo("Box Number", preview.c_str()))
+		{
+			for (int i = 0; i < boxes.size(); i++)
+			{
+				const bool selected = *comboBoxIndex == i;
+				if (ImGui::Selectable(std::to_string(i).c_str(), selected))
+				{
+					comboBoxIndex = i;
+				}
+				if (selected)
+					ImGui::SetItemDefaultFocus();
+			}
+			ImGui::EndCombo();
+		}
+
+		if (ImGui::Button("Spawn Control Window") && comboBoxIndex)
+		{
+			boxControlIds.insert(*comboBoxIndex);
+			comboBoxIndex.reset();
+		}
+	}
+	ImGui::End();
+
+	for (auto i = boxControlIds.begin(); i != boxControlIds.end();)
+	{
+		if (!boxes[*i]->SpawnControlWindow(*i, window.GetGraphics()))
+			i = boxControlIds.erase(i);
+		else
+			i++;
 	}
 }
 

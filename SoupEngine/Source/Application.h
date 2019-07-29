@@ -5,6 +5,9 @@
 #include "ImGui/ImguiManager.h"
 #include "Other/Camera.h"
 #include "DirectXStuff/PointLight/PointLight.h"
+#include <set>
+
+class Box;
 
 class Application
 {
@@ -17,6 +20,7 @@ private:
 	// Runs a single frame
 	void Tick();
 	void RenderDemoWindow();
+	void RenderBoxMaterialControlWindow();
 
 	ImguiManager imGuiManager;
 	SoupTimer timer;
@@ -26,5 +30,8 @@ private:
 	Camera cam;
 	PointLight light;
 	float simSpeed = 1.0f;
+	std::vector<Box*> boxes;
+	std::optional<int> comboBoxIndex;
+	std::set<int> boxControlIds;
 };
 
