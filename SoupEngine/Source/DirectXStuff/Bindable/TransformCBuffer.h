@@ -13,12 +13,13 @@ private:
 	};
 
 public:
-	TransformCBuffer(Graphics& gfx, const Drawable& parent);
+	TransformCBuffer(Graphics& gfx, const Drawable& parent, UINT slot = 0);
 	void Bind(Graphics& gfx) noexcept override;
 
 private:
 	static std::unique_ptr<VertexConstantBuffer<Transforms>> vcBuffer;
 	const Drawable& parent;
+	UINT slot;
 
 
 };

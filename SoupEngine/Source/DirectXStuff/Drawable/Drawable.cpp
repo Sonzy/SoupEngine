@@ -2,7 +2,6 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include "DirectXStuff/Bindable/IndexBuffer.h"
 #include <cassert>
-#include <typeinfo>
 
 DirectX::XMMATRIX Drawable::GetTransformXM() const noexcept
 {

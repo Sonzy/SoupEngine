@@ -58,7 +58,7 @@ Melon::Melon(Graphics& gfx,
 				{ 0.0f,0.0f,0.0f },
 			}
 		};
-		AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(gfx, cb2));
+		AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(gfx, cb2, 0));
 
 		const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 		{

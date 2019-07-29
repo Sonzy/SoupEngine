@@ -2,7 +2,7 @@
 #include "ImGui/imgui.h"
 
 PointLight::PointLight(Graphics & gfx, float radius)
-	: mesh(gfx, radius), cbuf(gfx)
+	: mesh(gfx, radius), cbuf(gfx, 0)
 {
 	Reset();
 }
@@ -38,7 +38,6 @@ void PointLight::Reset() noexcept
 {
 	cbData = {
 		{0.0f, 0.0f, 0.0f},
-		{0.7f, 0.7f, 0.9f},
 		{0.05f, 0.05f, 0.05f},
 		{1.0f, 1.0f, 1.0f},
 		1.0f,
@@ -55,8 +54,11 @@ void PointLight::Draw(Graphics & gfx) const noexcept
 	mesh.Draw(gfx);
 }
 
-void PointLight::Bind(Graphics & gfx) const noexcept
+void PointLight::Bind(Graphics & gfx, DirectX::FXMMATRIX view) const noexcept
 {
-	cbuf.Update(gfx, PointLightCBuf{ cbData });
+	auto dataCopy = cbData;
+	const auto pos = DirectX::XMLoadFloat3(&cbData.pos);
+	DirectX::XMStoreFloat3(&dataCopy.pos, DirectX::XMVector3Transform(pos, view));
+	cbuf.Update(gfx, dataCopy);
 	cbuf.Bind(gfx);
 }

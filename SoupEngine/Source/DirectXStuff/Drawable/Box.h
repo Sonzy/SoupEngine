@@ -1,8 +1,7 @@
 #pragma once
-#include "DrawableBase.h"
-#include <random>
+#include "TestObject.h"
 
-class Box : public DrawableBase<Box>
+class Box : public TestObject<Box>
 {
 public:
 	Box(Graphics& gfx, std::mt19937& rng,
@@ -10,30 +9,11 @@ public:
 		std::uniform_real_distribution<float>& dDist,
 		std::uniform_real_distribution<float>& oDist,
 		std::uniform_real_distribution<float>& rDist,
-		std::uniform_real_distribution<float>& bDist);
+		std::uniform_real_distribution<float>& bDist,
+		DirectX::XMFLOAT3 materialColor);
 
-	void Update(float deltaTime) noexcept override;
 	DirectX::XMMATRIX GetTransformXM() const noexcept override;
 
 private:
-	//Position stuff
-	float r;
-	float pitch = 0.0f;
-	float roll = 0.0f;
-	float yaw = 0.0f;
-	float theta;
-	float phi;
-	float chi;
-
-	//Speed
-	float dRoll;
-	float dPitch;
-	float dYaw;
-
-	//Rotation from centre of world
-	float dTheta;
-	float dPhi;
-	float dChi;
-
 	DirectX::XMFLOAT3X3 mTransform;
 };

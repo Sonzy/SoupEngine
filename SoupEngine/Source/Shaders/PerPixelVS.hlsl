@@ -1,12 +1,12 @@
 cbuffer CBuf
 {
-    matrix model;
+    matrix modelView;
     matrix modelViewProjection;
 };
 
  struct VSOut
  {
-     float3 worldPos : Position;
+     float3 PosRelCam : Position; //Position relative to the camera
      float3 normal : Normal;
      float4 pos : SV_Position;
  };
@@ -14,8 +14,8 @@ cbuffer CBuf
 VSOut main(  float3 pos : POSITION, float3 normal : Normal)
 {
     VSOut vso;
-    vso.worldPos = (float3) mul(float4(pos, 1.0f), model);
-    vso.normal = mul(normal, (float3x3) model);
+    vso.PosRelCam = (float3) mul(float4(pos, 1.0f), modelView);
+    vso.normal = mul(normal, (float3x3) modelView);
     vso.pos = mul(float4(pos, 1.0f), modelViewProjection);
     return vso;
 }

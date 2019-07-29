@@ -103,6 +103,7 @@
     <ClCompile Include="Source\Other\Camera.cpp" />
     <ClCompile Include="Source\DirectXStuff\PointLight\PointLight.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\SolidSphere.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -186,6 +187,8 @@
     <ClInclude Include="Source\Other\Camera.h" />
     <ClInclude Include="Source\DirectXStuff\PointLight\PointLight.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\SolidSphere.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\TestObject.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cylinder.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
@@ -213,5 +216,6 @@
     <FxCompile Include="Source\Shaders\PerPixelVS.hlsl" />
     <FxCompile Include="Source\Shaders\SolidPS.hlsl" />
     <FxCompile Include="Source\Shaders\SolidVS.hlsl" />
+    <FxCompile Include="Source\Shaders\IndexedPerPixelPS.hlsl" />
   </ItemGroup>
 </Project>

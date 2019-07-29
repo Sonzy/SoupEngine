@@ -1,7 +1,7 @@
+//Per frame
 cbuffer LightCBuf
 {
     float3 lightPos;
-    float3 materialColor;
     float3 ambient;
     float3 diffuseColor;
     float diffuseIntensity = 1.0f;
@@ -9,6 +9,14 @@ cbuffer LightCBuf
     float attLin = 0.0045f;
     float attQuad = 0.0075f;
 }
+
+//Per Object
+cbuffer ObjectCBuf
+{
+    float3 materialColour;
+    float specularIntensity;
+    float specularPower;
+};
 
 float4 main(float3 worldPos : Position, float3 normal : Normal) : SV_TARGET
 {
@@ -23,6 +31,13 @@ float4 main(float3 worldPos : Position, float3 normal : Normal) : SV_TARGET
 	//diffuse intensity
     const float diffuse = diffuseColor * diffuseIntensity * attenuation * max(0.0f, dot(directionToLight, normal));
 
+    //reflected light vector
+    const float3 w = normal * dot(vectorToLight, normal);
+    const float3 r = w * 2.0f - vectorToLight;
+
+    //Calculate the intensity based on angle between viewing and normal
+    const float3 specular = attenuation * (diffuseColor * diffuseIntensity) * specularIntensity * pow(max(0.0f, dot(normalize(-r), normalize(worldPos))), specularPower);
+
 	//final colour
-    return float4(saturate((diffuse + ambient) * materialColor), 1.0f);
+    return float4(saturate((diffuse + ambient + specular) * materialColour), 1.0f);
 }

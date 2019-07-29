@@ -155,6 +155,7 @@
     <ClCompile Include="Source\DirectXStuff\Bindable\VertexShader.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\BindableBase.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Box.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Drawable.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Melon.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Pyramid.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\Box.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Cone.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Cube.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Cylinder.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Drawable.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\DrawableBase.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\IndexedTriangleList.h" />
@@ -213,6 +215,7 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\SolidSphere.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\SoupMath.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Sphere.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\TestObject.h" />
     <ClInclude Include="Source\DirectXStuff\Graphics.h" />
     <ClInclude Include="Source\DirectXStuff\PointLight\PointLight.h" />
     <ClInclude Include="Source\DirectXStuff\Textures\GDIPlusManager.h" />
@@ -282,6 +285,16 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Source\Shaders\IndexedPerPixelPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)Source\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Source\Shaders\PerPixelPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

@@ -22,7 +22,8 @@ public:
 		GetContext(gfx)->Unmap(constantBuffer.Get(), 0u);
 	}
 
-	ConstantBuffer(Graphics& gfx, const C& consts)
+	ConstantBuffer(Graphics& gfx, const C& consts, UINT slot)
+		:slot(slot)
 	{
 		INFOMAN(gfx);
 
@@ -39,7 +40,8 @@ public:
 		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&cbd, &csd, &constantBuffer));
 	}
 
-	ConstantBuffer(Graphics& gfx)
+	ConstantBuffer(Graphics& gfx, UINT slot)
+		:slot(slot)
 	{
 		INFOMAN(gfx);
 
@@ -57,6 +59,7 @@ public:
 
 protected:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
+	UINT slot;
 };
 
 template<typename C>
@@ -65,13 +68,14 @@ class PixelConstantBuffer : public ConstantBuffer<C>
 	//These allow you to access parent class stuff in a template child class by importing them
 	//or could do this->GetContext(gfx)->PSSetConstantBuffers(0u, 1u, constantBuffer.GetAddressOf());
 	using ConstantBuffer<C>::constantBuffer;
+	using ConstantBuffer<C>::slot;
 	using Bindable::GetContext;
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
 
 	void Bind(Graphics& gfx) noexcept override
 	{
-		GetContext(gfx)->PSSetConstantBuffers(0u, 1u, constantBuffer.GetAddressOf());
+		GetContext(gfx)->PSSetConstantBuffers(slot, 1u, constantBuffer.GetAddressOf());
 	}
 };
 
@@ -80,12 +84,13 @@ class VertexConstantBuffer : public ConstantBuffer<C>
 {
 	//These allow you to access parent class stuff in a template child class
 	using ConstantBuffer<C>::constantBuffer;
+	using ConstantBuffer<C>::slot;
 	using Bindable::GetContext;
 public:
 	using ConstantBuffer<C>::ConstantBuffer;
 
 	void Bind(Graphics& gfx) noexcept override
 	{
-		GetContext(gfx)->VSSetConstantBuffers(0u, 1u, constantBuffer.GetAddressOf());
+		GetContext(gfx)->VSSetConstantBuffers(slot, 1u, constantBuffer.GetAddressOf());
 	}
 };
