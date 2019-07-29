@@ -6,7 +6,7 @@
 *.lo
 *.o
 *.obj
-!SoupEngine/Source/Models*.obj
+!SoupEngine/Source/Models/*.obj
 
 # Precompiled Headers
 /ipch

@@ -11,6 +11,7 @@
 #include "DirectXStuff/Drawable/Sheet.h"
 #include "DirectXStuff/Drawable/SkinnedBox.h"
 #include "DirectXStuff/Drawable/Cylinder.h"
+#include "DirectXStuff/Drawable/AssimpTest.h"
 
 #include "DirectXStuff/Textures/GDIPlusManager.h"
 #include "DirectXStuff/Textures/Surface.h"
@@ -18,10 +19,6 @@
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_dx11.h"
 #include "ImGui/imgui_impl_win32.h"
-
-#include <Assimp/Importer.hpp>
-#include <Assimp/scene.h>
-#include <Assimp/postprocess.h>
 
 GDIPlusManager gdipm;
 
@@ -38,17 +35,18 @@ Application::Application()
 		std::unique_ptr<Drawable> operator()()
 		{
 			const DirectX::XMFLOAT3 mat = {cdist(rng), cdist(rng), cdist(rng)};
-			switch (spawnDistribution(rng))
-			{
-			case 0:
-				return std::make_unique<Box>(gfx, rng, adist, ddist, odist, rdist, bdist, mat);
-			case 1:
-				return std::make_unique<Cylinder>(gfx, rng, adist, ddist, odist, rdist, bdist, tdist);
-			case 2:
-				return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist, tdist);
-			case 3:
-				return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist, odist, rdist);
-			}
+			//switch (spawnDistribution(rng))
+			//{
+			//case 0:
+			//	return std::make_unique<Box>(gfx, rng, adist, ddist, odist, rdist, bdist, mat);
+			//case 1:
+			//	return std::make_unique<Cylinder>(gfx, rng, adist, ddist, odist, rdist, bdist, tdist);
+			//case 2:
+			//	return std::make_unique<Pyramid>(gfx, rng, adist, ddist, odist, rdist, tdist);
+			//case 3:
+			//	return std::make_unique<SkinnedBox>(gfx, rng, adist, ddist, odist, rdist);
+			//}
+			return std::make_unique<AssimpTest>(gfx, rng, adist, ddist, odist, rdist, mat, 1.0f);
 		}	
 
 	private:

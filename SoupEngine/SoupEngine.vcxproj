@@ -163,6 +163,7 @@
     <ClCompile Include="Source\DirectXStuff\Bindable\TransformCBuffer.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\VertexBuffer.cpp" />
     <ClCompile Include="Source\DirectXStuff\Bindable\VertexShader.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\AssimpTest.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\BindableBase.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Box.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Source\DirectXStuff\Bindable\TransformCBuffer.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\VertexBuffer.h" />
     <ClInclude Include="Source\DirectXStuff\Bindable\VertexShader.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\AssimpTest.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\BindableBase.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Box.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Cone.h" />

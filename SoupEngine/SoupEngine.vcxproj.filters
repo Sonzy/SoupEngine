@@ -104,6 +104,7 @@
     <ClCompile Include="Source\DirectXStuff\PointLight\PointLight.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\SolidSphere.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\AssimpTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -228,6 +229,7 @@
     <ClInclude Include="Source\Assimp\vector2.h" />
     <ClInclude Include="Source\Assimp\vector3.h" />
     <ClInclude Include="Source\Assimp\version.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\AssimpTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">
