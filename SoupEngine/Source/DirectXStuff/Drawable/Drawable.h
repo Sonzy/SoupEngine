@@ -17,7 +17,8 @@ public:
 
 	virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0; //=0 makes this class abstract, and has to implement this
 
-	virtual void Update(float deltaTime) noexcept = 0;
+	virtual void Update(float deltaTime) noexcept
+	{};
 
 protected:
 	template<class T>

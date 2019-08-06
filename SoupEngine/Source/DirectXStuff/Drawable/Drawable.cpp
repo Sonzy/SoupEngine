@@ -23,10 +23,6 @@ void Drawable::Draw(Graphics & gfx) const noexcept
 	gfx.DrawIndexed(indexBuffer->GetCount());
 }
 
-void Drawable::Update(float deltaTime) noexcept
-{
-}
-
 void Drawable::AddBind(std::unique_ptr<Bindable> bind) noexcept
 {
 	//Check that we arent trying to add an index buffer

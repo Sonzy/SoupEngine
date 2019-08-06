@@ -258,6 +258,7 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\DrawableBase.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\IndexedTriangleList.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Melon.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Model.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Plane.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Prism.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Pyramid.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="Source\DirectXStuff\PointLight\PointLight.h" />
     <ClInclude Include="Source\DirectXStuff\Textures\GDIPlusManager.h" />
     <ClInclude Include="Source\DirectXStuff\Textures\Surface.h" />
+    <ClInclude Include="Source\DirectXStuff\3DSystems\Vertex.h" />
     <ClInclude Include="Source\Error Handling\dxerr.h" />
     <ClInclude Include="Source\Error Handling\DXGIInfoManager.h" />
     <ClInclude Include="Source\Error Handling\Exceptions.h" />

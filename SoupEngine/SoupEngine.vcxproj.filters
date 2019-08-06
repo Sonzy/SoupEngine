@@ -230,6 +230,8 @@
     <ClInclude Include="Source\Assimp\vector3.h" />
     <ClInclude Include="Source\Assimp\version.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\AssimpTest.h" />
+    <ClInclude Include="Source\DirectXStuff\3DSystems\Vertex.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Model.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">

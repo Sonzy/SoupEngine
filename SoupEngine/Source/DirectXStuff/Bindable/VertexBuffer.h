@@ -1,6 +1,7 @@
 #pragma once
 #include "Bindable.h"
 #include "Error Handling/GraphicsErrorMacros.h"
+#include "DirectXStuff/3DSystems/Vertex.h"
 
 class VertexBuffer : public Bindable
 {
@@ -25,6 +26,25 @@ public:
 		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&bufferDesc, &subData, &vertexBuffer));
 	}
 
+
+	VertexBuffer(Graphics& gfx, const VertexSys::VertexBuffer& vbuf)
+		: stride((UINT)vbuf.GetLayout().Size())
+	{
+		INFOMAN(gfx);
+
+		D3D11_BUFFER_DESC bufferDesc;
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.CPUAccessFlags = 0u;
+		bufferDesc.MiscFlags = 0u;
+		bufferDesc.ByteWidth = UINT(vbuf.SizeBytes());
+		bufferDesc.StructureByteStride = stride;
+
+		D3D11_SUBRESOURCE_DATA subData = {};
+		subData.pSysMem = vbuf.GetData();
+
+		GFX_THROW_INFO(GetDevice(gfx)->CreateBuffer(&bufferDesc, &subData, &vertexBuffer));
+	}
 
 	void Bind(Graphics& gfx) noexcept override;
 

@@ -6,8 +6,7 @@
 #include "Other/Camera.h"
 #include "DirectXStuff/PointLight/PointLight.h"
 #include <set>
-
-class Box;
+#include "DirectXStuff/Drawable/Model.h"
 
 class Application
 {
@@ -20,18 +19,31 @@ private:
 	// Runs a single frame
 	void Tick();
 	void RenderDemoWindow();
-	void RenderBoxMaterialControlWindow();
+	void ShowModelWindow();
 
 	ImguiManager imGuiManager;
 	SoupTimer timer;
-	std::vector<std::unique_ptr<Drawable>> drawables;
 	Window window;
-	static constexpr size_t nDrawables = 180;
 	Camera cam;
 	PointLight light;
+	Model nano{window.GetGraphics(), "Source\\Models\\nanosuit.obj"};
 	float simSpeed = 1.0f;
-	std::vector<Box*> boxes;
-	std::optional<int> comboBoxIndex;
-	std::set<int> boxControlIds;
-};
 
+
+	struct
+	{
+		struct
+		{
+			float roll = 0.0f;
+			float pitch = 0.0f;
+			float yaw = 0.0f;
+		} rot;
+
+		struct 
+		{
+			float x = 0.0f;
+			float y = 0.0f;
+			float z = 0.0f;
+		} pos;
+	} transform;
+};
