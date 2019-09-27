@@ -44,7 +44,7 @@ public:
 	// Key events
 
 	bool IsKeyPressed(unsigned char keycode);
-	Event ReadKey() noexcept;
+	std::optional<Event> ReadKey() noexcept;
 	bool IsKeyEmpty() const noexcept;
 	void ClearKey() noexcept;
 

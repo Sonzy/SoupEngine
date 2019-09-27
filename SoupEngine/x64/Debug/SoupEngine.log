@@ -1,4 +1,17 @@
 ﻿  Application.cpp
+  Graphics.cpp
+  DXGIInfoManager.cpp
+D:\Personal Projects\SoupEngine\SoupEngine\Source\Window\WindowsMacroUndefs.h(4,1): warning C4005: '_WIN32_WINNT': macro redefinition
+D:\Windows Kits\10\Include\10.0.18362.0\shared\sdkddkver.h(217): message : see previous definition of '_WIN32_WINNT'
+D:\Personal Projects\SoupEngine\SoupEngine\Source\Window\WindowsMacroUndefs.h(47,1): warning C4005: 'STRICT': macro redefinition
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
   Main.cpp
+  Camera.cpp
+  Keyboard.cpp
+  Mouse.cpp
+  Window.cpp
   Generating Code...
+D:\Windows Kits\10\Include\10.0.18362.0\shared\minwindef.h(23): message : see previous definition of 'STRICT'
+  LINK : D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe not found or not built by the last incremental link; performing full link
   SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Debug\SoupEngine.exe

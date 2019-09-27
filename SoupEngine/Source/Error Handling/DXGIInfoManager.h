@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <wrl.h>
+#include <string>
 #include <dxgidebug.h>
 
 /* Get the dxerror info instead of having to look in output log */

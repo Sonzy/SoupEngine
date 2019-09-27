@@ -19,20 +19,26 @@ Window::Window(int width, int height, const char * name)
 	//Adjust for the topbar etc
 	if (AdjustWindowRect(&windowRegion, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) == 0)
 		throw WIND_LAST_EXCEPT();
-	
-	//Create the window										/* Window Style */						/* Where to spawn the window */
+										/* Window Style */						/* Where to spawn the window */
 	hWnd = CreateWindowEx(0, WindowClass::GetName(), name, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT,
 		windowRegion.right - windowRegion.left, windowRegion.bottom - windowRegion.top, nullptr, nullptr, WindowClass::GetInstance(), this);
 
-	//Show the window
 	ShowWindow(hWnd, SW_SHOW);
 	//Initialise ImGui
 	ImGui_ImplWin32_Init(hWnd);
 	//Create graphics
 	gfx = std::make_unique<Graphics>(hWnd);
 
-	//Exception example
-	//throw WIND_EXCEPT(ERROR_ARENA_TRASHED);
+
+	//Register our raw input devices
+	RAWINPUTDEVICE rid;
+	rid.usUsagePage = 0x01;
+	rid.usUsage = 0x02;
+	rid.dwFlags = 0;
+	rid.hwndTarget = nullptr;
+
+	if (RegisterRawInputDevices(&rid, 1, sizeof(rid)) == FALSE) //Tries to get the first raw input device
+		throw WIND_LAST_EXCEPT();
 }
 
 Window::~Window()
@@ -75,6 +81,62 @@ int Window::GetWindowWidth()
 int Window::GetWindowHeight()
 {
 	return height;
+}
+
+void Window::EnableCursor()
+{
+	cursorEnabled = true;
+	ShowCursor();
+	EnableImGuiMouse(true);
+	ConfineCursor(false);
+}
+
+void Window::DisableCursor()
+{
+	cursorEnabled = false;
+	HideCursor();
+	EnableImGuiMouse(false);
+	ConfineCursor(true);
+}
+
+bool Window::CursorEnabled()
+{
+	return cursorEnabled;
+}
+
+void Window::HideCursor()
+{
+	while (::ShowCursor(FALSE) >= 0);
+}
+
+void Window::ShowCursor()
+{
+	while (::ShowCursor(TRUE) < 0);
+}
+
+void Window::EnableImGuiMouse(bool enable)
+{
+	if (enable)
+	{
+		ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+	}
+	else
+	{
+		ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
+	}
+}
+
+void Window::ConfineCursor(bool confine)
+{
+	if (confine)
+	{
+		RECT rect;
+		GetClientRect(hWnd, &rect);
+		MapWindowPoints(hWnd, nullptr, reinterpret_cast<POINT*>(&rect), 2);
+		ClipCursor(&rect);
+	}
+	else
+		ClipCursor(nullptr);
 }
 
 LRESULT WINAPI Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -120,6 +182,23 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		return 0;
 	case WM_KILLFOCUS: // When we lose focus, reset the keyboard state
 		keyboard.ClearState();
+	case WM_ACTIVATE:
+
+		//if (cursorEnabled)
+		//	break;
+		//
+		//if (wParam & WA_ACTIVE || wParam & WA_CLICKACTIVE)
+		//{
+		//	ConfineCursor(true);
+		//	HideCursor();
+		//}
+		//else
+		//{
+		//	ConfineCursor(false);
+		//	ShowCursor();
+		//}
+
+		break;
 	//Key Messages===================================
 	case WM_SYSKEYDOWN:
 	case WM_KEYDOWN: //Not Case Sensitive
@@ -184,6 +263,12 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 	}		
 	case WM_LBUTTONDOWN:
 	{
+		if (!cursorEnabled)
+		{
+			ConfineCursor(true);
+			HideCursor();
+		}
+
 		const POINTS points = MAKEPOINTS(lParam);
 		mouse.OnLeftPressed(points.x, points.y);
 		break;
@@ -224,6 +309,33 @@ LRESULT Window::HandleMessages(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam
 		mouse.OnWheelDelta(points.x, points.y, GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
 	}
+	//= Raw Mouse Messages ==========================
+
+	case WM_INPUT:
+
+		if (!mouse.rawEnabled)
+			break;
+
+		UINT size = 0;
+		//Get the size of the input data
+		if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, nullptr, &size, sizeof(RAWINPUTHEADER)) == -1)
+			break;
+
+		rawInputBuffer.resize(size);
+
+		//Read the input data
+		if (GetRawInputData(reinterpret_cast<HRAWINPUT>(lParam), RID_INPUT, rawInputBuffer.data(), &size, sizeof(RAWINPUTHEADER)) != size)
+			break;
+
+		//Process the input data
+		auto& ri = reinterpret_cast<const RAWINPUT&>(*rawInputBuffer.data());
+		if (ri.header.dwType == RIM_TYPEMOUSE &&
+			(ri.data.mouse.lLastX != 0 || ri.data.mouse.lLastY != 0)) //Read input from mouse devices that have movement input
+		{
+			mouse.OnRawDelta( ri.data.mouse.lLastX, ri.data.mouse.lLastY);
+		}
+
+		break;
 	}
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);

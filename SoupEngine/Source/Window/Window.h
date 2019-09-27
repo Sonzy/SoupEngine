@@ -67,6 +67,10 @@ public:
 	int GetWindowWidth();
 	int GetWindowHeight();
 
+	void EnableCursor();
+	void DisableCursor();
+	bool CursorEnabled();
+
 	Keyboard keyboard;
 	Mouse mouse;
 
@@ -78,8 +82,16 @@ protected:
 	int height;
 	HWND hWnd;
 	std::unique_ptr<Graphics> gfx;
+	bool cursorEnabled = true;
+
+	std::vector<char> rawInputBuffer;
 
 private:
+	void HideCursor();
+	void ShowCursor();
+	void EnableImGuiMouse(bool enable);
+	void ConfineCursor(bool confine);
+
 	//I nitially handles the messages to store a pointer to the window
 	static LRESULT WINAPI HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	// Passes messages to HandleMessages()

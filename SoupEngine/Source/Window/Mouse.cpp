@@ -7,6 +7,16 @@ std::pair<int, int> Mouse::GetPos() const noexcept
 	return std::make_pair(x, y);
 }
 
+std::optional<Mouse::RawDelta> Mouse::ReadRawDelta() noexcept
+{
+	if (rawDeltaBuffer.empty())
+		return std::nullopt;
+
+	const RawDelta d = rawDeltaBuffer.front();
+	rawDeltaBuffer.pop();
+	return d;
+}
+
 int Mouse::GetXPos() const noexcept
 {
 	return x;
@@ -42,6 +52,16 @@ void Mouse::Flush() noexcept
 	buffer = std::queue<Event>();
 }
 
+void Mouse::EnableRawInput(bool Enable)
+{
+	rawEnabled = Enable;
+}
+
+bool Mouse::IsRawEnabled()
+{
+	return rawEnabled;
+}
+
 void Mouse::OnMouseMove(int x, int y) noexcept
 {
 	this->x = x;
@@ -49,6 +69,12 @@ void Mouse::OnMouseMove(int x, int y) noexcept
 
 	buffer.push(Mouse::Event(Event::Type::Move, *this));
 	TrimBuffer();
+}
+
+void Mouse::OnRawDelta(int x, int y) noexcept
+{
+	rawDeltaBuffer.push({ x, y });
+	TrimBuffer(); //TODO: Trimming wrong buffer?
 }
 
 void Mouse::OnLeftPressed(int x, int y) noexcept
@@ -148,6 +174,10 @@ void Mouse::TrimBuffer() noexcept
 	{
 		buffer.pop();
 	}
+}
+
+void Mouse::TrimRawInputBuffer() noexcept
+{
 }
 
 Mouse::Event Mouse::ReadEvent() noexcept

@@ -7,7 +7,7 @@ bool Keyboard::IsKeyPressed(unsigned char keycode)
 	return keystates[keycode];
 }
 
-Keyboard::Event Keyboard::ReadKey() noexcept
+std::optional<Keyboard::Event> Keyboard::ReadKey() noexcept
 {
 	//If there are keys in the buffer, take the first keyevent from the queue and return it
 	if (keyBuffer.size() > 0)
@@ -17,7 +17,7 @@ Keyboard::Event Keyboard::ReadKey() noexcept
 		return keyEvent;
 	}
 
-	return Keyboard::Event();
+	return std::nullopt;
 }
 
 bool Keyboard::IsKeyEmpty() const noexcept

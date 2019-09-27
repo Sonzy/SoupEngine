@@ -46,8 +46,25 @@ void Application::Tick()
 		* DirectX::XMMatrixTranslation(transform.pos.x, transform.pos.y, transform.pos.z);
 
 	nano.Draw(window.GetGraphics(), modelTrans);
-
 	light.Draw(window.GetGraphics());
+
+	//Toggling cursor
+	while (const auto e = window.keyboard.ReadKey())
+	{
+		if (e->IsPressEvent() && e->GetKeyCode() == VK_INSERT)
+		{
+			if (window.CursorEnabled())
+			{
+				window.DisableCursor();
+				window.mouse.EnableRawInput(true);
+			}
+			else
+			{
+				window.EnableCursor();
+				window.mouse.EnableRawInput(false);
+			}
+		}
+	}
 
 	//Render simspeed window
 	if (ImGui::Begin("Sim Speed"))
@@ -60,6 +77,7 @@ void Application::Tick()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	ShowModelWindow();
+	ShowRawInputWindow();
 
 	window.GetGraphics().EndFrame();
 }
@@ -97,6 +115,22 @@ void Application::ShowModelWindow()
 			transform.rot.pitch = 0.0f;
 			transform.rot.yaw = 0.0f;
 		}
+	}
+	ImGui::End();
+}
+
+void Application::ShowRawInputWindow()
+{
+	while (const auto d = window.mouse.ReadRawDelta())
+	{
+		x += d->x;
+		y += d->y;
+	}
+
+	if (ImGui::Begin("Raw Input"))
+	{
+		ImGui::Text("Cursor: %s", window.CursorEnabled() ? "Enabled" : "Disabled");
+		ImGui::Text("Tally: (%d, %d)", x, y);
 	}
 	ImGui::End();
 }

@@ -21,6 +21,8 @@ private:
 	void RenderDemoWindow();
 	void ShowModelWindow();
 
+	void ShowRawInputWindow();
+
 	ImguiManager imGuiManager;
 	SoupTimer timer;
 	Window window;
@@ -29,6 +31,8 @@ private:
 	Model nano{window.GetGraphics(), "Source\\Models\\nanosuit.obj"};
 	float simSpeed = 1.0f;
 
+	int x = 0;
+	int y = 0;
 
 	struct
 	{
