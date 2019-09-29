@@ -2,7 +2,8 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include <d3dcompiler.h>
 
-VertexShader::VertexShader(Graphics & gfx, const std::wstring & path)
+
+Bind::VertexShader::VertexShader(Graphics & gfx, const std::wstring & path)
 {
 	INFOMAN(gfx);
 
@@ -10,12 +11,12 @@ VertexShader::VertexShader(Graphics & gfx, const std::wstring & path)
 	GFX_THROW_INFO(GetDevice(gfx)->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &vertexShader));
 }
 
-ID3DBlob * VertexShader::GetByteCode() const noexcept
+ID3DBlob * Bind::VertexShader::GetByteCode() const noexcept
 {
 	return blob.Get();
 }
 
-void VertexShader::Bind(Graphics& gfx) noexcept
+void Bind::VertexShader::Bind(Graphics& gfx) noexcept
 {
 	GetContext(gfx)->VSSetShader(vertexShader.Get(), nullptr, 0);
 }

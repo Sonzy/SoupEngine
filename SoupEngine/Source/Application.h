@@ -6,7 +6,7 @@
 #include "Other/Camera.h"
 #include "DirectXStuff/PointLight/PointLight.h"
 #include <set>
-#include "DirectXStuff/Drawable/Model.h"
+#include "DirectXStuff/Drawable/Mesh.h"
 
 class Application
 {
@@ -21,13 +21,16 @@ private:
 	void RenderDemoWindow();
 	void ShowModelWindow();
 
+	void RawInputToggle();
 	void ShowRawInputWindow();
+	void CameraMovement( float deltaTime );
 
 	ImguiManager imGuiManager;
 	SoupTimer timer;
 	Window window;
 	Camera cam;
 	PointLight light;
+
 	Model nano{window.GetGraphics(), "Source\\Models\\nanosuit.obj"};
 	float simSpeed = 1.0f;
 

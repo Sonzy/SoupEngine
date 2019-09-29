@@ -105,6 +105,7 @@
     <ClCompile Include="Source\DirectXStuff\Drawable\SolidSphere.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\AssimpTest.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
@@ -231,7 +232,7 @@
     <ClInclude Include="Source\Assimp\version.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\AssimpTest.h" />
     <ClInclude Include="Source\DirectXStuff\3DSystems\Vertex.h" />
-    <ClInclude Include="Source\DirectXStuff\Drawable\Model.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Mesh.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Source\Error Handling\DXGetErrorDescription.inl">

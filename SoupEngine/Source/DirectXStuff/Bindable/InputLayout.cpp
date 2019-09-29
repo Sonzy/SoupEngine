@@ -1,6 +1,7 @@
 #include "InputLayout.h"
 #include "Error Handling/GraphicsErrorMacros.h"
 
+using namespace Bind;
 InputLayout::InputLayout(Graphics & gfx, const std::vector<D3D11_INPUT_ELEMENT_DESC>& layout, ID3DBlob * vertexShaderByteCode)
 {
 	INFOMAN(gfx);

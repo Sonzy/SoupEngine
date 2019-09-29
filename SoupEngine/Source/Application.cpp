@@ -17,7 +17,7 @@ GDIPlusManager gdipm;
 
 
 Application::Application()
-	:window(800, 600, "Soup Window"), light(window.GetGraphics())
+	:window(1600, 900, "Soup Window"), light(window.GetGraphics())
 {
 	window.GetGraphics().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 40.0f));
 }
@@ -45,26 +45,11 @@ void Application::Tick()
 	const auto modelTrans = DirectX::XMMatrixRotationRollPitchYaw(transform.rot.roll, transform.rot.pitch, transform.rot.yaw)
 		* DirectX::XMMatrixTranslation(transform.pos.x, transform.pos.y, transform.pos.z);
 
-	nano.Draw(window.GetGraphics(), modelTrans);
+	nano.Draw(window.GetGraphics());
 	light.Draw(window.GetGraphics());
 
-	//Toggling cursor
-	while (const auto e = window.keyboard.ReadKey())
-	{
-		if (e->IsPressEvent() && e->GetKeyCode() == VK_INSERT)
-		{
-			if (window.CursorEnabled())
-			{
-				window.DisableCursor();
-				window.mouse.EnableRawInput(true);
-			}
-			else
-			{
-				window.EnableCursor();
-				window.mouse.EnableRawInput(false);
-			}
-		}
-	}
+	RawInputToggle();
+	CameraMovement(deltaTime);
 
 	//Render simspeed window
 	if (ImGui::Begin("Sim Speed"))
@@ -76,8 +61,7 @@ void Application::Tick()
 
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	ShowModelWindow();
-	ShowRawInputWindow();
+	nano.ShowWindow();
 
 	window.GetGraphics().EndFrame();
 }
@@ -119,6 +103,27 @@ void Application::ShowModelWindow()
 	ImGui::End();
 }
 
+void Application::RawInputToggle()
+{
+	//Toggling cursor
+	while (const auto e = window.keyboard.ReadKey())
+	{
+		if (e->IsPressEvent() && e->GetKeyCode() == VK_INSERT)
+		{
+			if (window.CursorEnabled())
+			{
+				window.DisableCursor();
+				window.mouse.EnableRawInput(true);
+			}
+			else
+			{
+				window.EnableCursor();
+				window.mouse.EnableRawInput(false);
+			}
+		}
+	}
+}
+
 void Application::ShowRawInputWindow()
 {
 	while (const auto d = window.mouse.ReadRawDelta())
@@ -133,5 +138,31 @@ void Application::ShowRawInputWindow()
 		ImGui::Text("Tally: (%d, %d)", x, y);
 	}
 	ImGui::End();
+}
+
+void Application::CameraMovement(float deltaTime)
+{
+	if (window.CursorEnabled())
+		return;
+
+	if (window.keyboard.IsKeyPressed('W'))
+		cam.Translate( {0.0f, 0.0f, deltaTime } );
+	if (window.keyboard.IsKeyPressed('A'))
+		cam.Translate({ -deltaTime, 0.0f, 0.0f });
+	if (window.keyboard.IsKeyPressed('S'))
+		cam.Translate({ 0.0f, 0.0f, -deltaTime });
+	if (window.keyboard.IsKeyPressed('D'))
+		cam.Translate({ deltaTime, 0.0f, 0.0f });
+
+	if (window.keyboard.IsKeyPressed('R'))
+		cam.Translate({ 0.0f, deltaTime, 0.0f });
+	if (window.keyboard.IsKeyPressed('F'))
+		cam.Translate({ 0.0f, -deltaTime, 0.0f });
+
+	while (const auto delta = window.mouse.ReadRawDelta())
+	{
+		if (!window.CursorEnabled())
+			cam.Rotate(delta->x, delta->y);
+	}
 }
 

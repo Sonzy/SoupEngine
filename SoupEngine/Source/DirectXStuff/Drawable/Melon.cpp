@@ -3,7 +3,7 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include "Sphere.h"
 
-
+using namespace Bind;
 
 Melon::Melon(Graphics& gfx,
 	std::mt19937& rng,

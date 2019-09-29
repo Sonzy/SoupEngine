@@ -2,6 +2,7 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include <d3dcompiler.h>
 
+using namespace Bind;
 PixelShader::PixelShader(Graphics & gfx, const std::wstring & path)
 {
 	INFOMAN(gfx);

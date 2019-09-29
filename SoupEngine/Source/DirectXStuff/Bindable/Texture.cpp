@@ -2,6 +2,7 @@
 #include "DirectXStuff/Textures/Surface.h"
 #include "Error Handling/GraphicsErrorMacros.h"
 
+using namespace Bind;
 Texture::Texture(Graphics & gfx, const Surface & s)
 {
 	INFOMAN(gfx);

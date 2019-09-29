@@ -3,12 +3,15 @@
 
 class Surface;
 
-class Texture : public Bindable
+namespace Bind
 {
-public: 
-	Texture(Graphics& gfx, const Surface& s);
-	void Bind(Graphics& gfx) noexcept override;
+	class Texture : public Bind::Bindable
+	{
+	public:
+		Texture(Graphics& gfx, const Surface& s);
+		void Bind(Graphics& gfx) noexcept override;
 
-protected:
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pTextureView;
-};
+	protected:
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pTextureView;
+	};
+}

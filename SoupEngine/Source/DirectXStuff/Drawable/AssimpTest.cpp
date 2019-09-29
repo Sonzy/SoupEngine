@@ -51,22 +51,22 @@ AssimpTest::AssimpTest(Graphics & gfx, std::mt19937 & rng,
 			indices.push_back(face.mIndices[2]);
 		}
 
-		AddStaticBind(std::make_unique<VertexBuffer>(gfx, vbuf));
+		AddStaticBind(std::make_unique<Bind::VertexBuffer>(gfx, vbuf));
 
 
-		auto vShader = std::make_unique<VertexShader>(gfx, L"Source/Shaders/PerPixelVS.cso");
+		auto vShader = std::make_unique<Bind::VertexShader>(gfx, L"Source/Shaders/PerPixelVS.cso");
 		auto vShaderByteCode = vShader->GetByteCode();
 
 		//Bind the pixel and vertex shaders
 		AddStaticBind(std::move(vShader));
-		AddStaticBind(std::make_unique<PixelShader>(gfx, L"Source/Shaders/PerPixelPS.cso"));
+		AddStaticBind(std::make_unique<Bind::PixelShader>(gfx, L"Source/Shaders/PerPixelPS.cso"));
 
-		AddStaticIndexBuffer(std::make_unique<IndexBuffer>(gfx, indices));
+		AddStaticIndexBuffer(std::make_unique<Bind::IndexBuffer>(gfx, indices));
 
-		AddStaticBind(std::make_unique<InputLayout>(gfx, vbuf.GetLayout().GetD3DLayout(), vShaderByteCode));
+		AddStaticBind(std::make_unique<Bind::InputLayout>(gfx, vbuf.GetLayout().GetD3DLayout(), vShaderByteCode));
 
 		//Bind the topology
-		AddStaticBind(std::make_unique<Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
+		AddStaticBind(std::make_unique<Bind::Topology>(gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 
 		struct PSMaterialConstant
 		{
@@ -76,11 +76,11 @@ AssimpTest::AssimpTest(Graphics & gfx, std::mt19937 & rng,
 			float padding[3];
 		} materialConstants;
 		materialConstants.color = material;
-		AddStaticBind(std::make_unique<PixelConstantBuffer<PSMaterialConstant>>(gfx, materialConstants, 1u));
+		AddStaticBind(std::make_unique<Bind::PixelConstantBuffer<PSMaterialConstant>>(gfx, materialConstants, 1u));
 	}
 	else
 		SetIndexFromStatic();
 
 	//Bind the transform cbuffer
-	AddBind(std::make_unique<TransformCBuffer>(gfx, *this));
+	AddBind(std::make_unique<Bind::TransformCBuffer>(gfx, *this));
 }

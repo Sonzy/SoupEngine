@@ -1,6 +1,8 @@
 #include "IndexBuffer.h"
 #include "Error Handling/GraphicsErrorMacros.h"
 
+using namespace Bind;
+
 IndexBuffer::IndexBuffer(Graphics & gfx, const std::vector<unsigned short>& indices)
 	: count ((UINT) indices.size())
 {

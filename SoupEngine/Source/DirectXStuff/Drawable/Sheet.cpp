@@ -6,7 +6,7 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include "Plane.h"
 
-
+using namespace Bind;
 Sheet::Sheet(Graphics& gfx,	std::mt19937& rng,	std::uniform_real_distribution<float>& adist,	std::uniform_real_distribution<float>& ddist,
 	std::uniform_real_distribution<float>& odist,	std::uniform_real_distribution<float>& rdist)
 	:	r(rdist(rng)),	droll(ddist(rng)),	dpitch(ddist(rng)),	dyaw(ddist(rng)),	dphi(odist(rng)),	dtheta(odist(rng)),	dchi(odist(rng)),

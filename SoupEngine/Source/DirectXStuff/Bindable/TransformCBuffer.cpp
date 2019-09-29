@@ -1,5 +1,6 @@
 #include "TransformCBuffer.h"
 
+using namespace Bind;
 TransformCBuffer::TransformCBuffer(Graphics & gfx, const Drawable & parent, UINT slot)
 	: parent(parent), slot(slot)
 

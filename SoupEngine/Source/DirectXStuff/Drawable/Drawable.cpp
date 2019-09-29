@@ -3,6 +3,8 @@
 #include "DirectXStuff/Bindable/IndexBuffer.h"
 #include <cassert>
 
+using namespace Bind;
+
 DirectX::XMMATRIX Drawable::GetTransformXM() const noexcept
 {
 	return DirectX::XMMATRIX();
@@ -26,7 +28,7 @@ void Drawable::Draw(Graphics & gfx) const noexcept
 void Drawable::AddBind(std::unique_ptr<Bindable> bind) noexcept
 {
 	//Check that we arent trying to add an index buffer
-	assert("MUST use AddIndexBuffer to bind index buffer" && typeid(*bind) != typeid(IndexBuffer));
+	assert("MUST use AddIndexBuffer to bind index buffer" && typeid(*bind) != typeid(Bind::IndexBuffer));
 	binds.push_back(std::move(bind));
 }
 

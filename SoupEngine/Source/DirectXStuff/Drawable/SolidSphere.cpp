@@ -3,7 +3,7 @@
 #include "Error Handling/GraphicsErrorMacros.h"
 #include "Sphere.h"
 
-
+using namespace Bind;
 SolidSphere::SolidSphere(Graphics& gfx, float radius)
 {
 	namespace dx = DirectX;

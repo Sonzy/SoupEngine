@@ -27,7 +27,7 @@ Window::Window(int width, int height, const char * name)
 	//Initialise ImGui
 	ImGui_ImplWin32_Init(hWnd);
 	//Create graphics
-	gfx = std::make_unique<Graphics>(hWnd);
+	gfx = std::make_unique<Graphics>(hWnd, width, height);
 
 
 	//Register our raw input devices

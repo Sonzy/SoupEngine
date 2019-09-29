@@ -169,6 +169,7 @@
     <ClCompile Include="Source\DirectXStuff\Drawable\Cylinder.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Drawable.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Melon.cpp" />
+    <ClCompile Include="Source\DirectXStuff\Drawable\Mesh.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Pyramid.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\Sheet.cpp" />
     <ClCompile Include="Source\DirectXStuff\Drawable\SkinnedBox.cpp" />
@@ -258,7 +259,7 @@
     <ClInclude Include="Source\DirectXStuff\Drawable\DrawableBase.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\IndexedTriangleList.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Melon.h" />
-    <ClInclude Include="Source\DirectXStuff\Drawable\Model.h" />
+    <ClInclude Include="Source\DirectXStuff\Drawable\Mesh.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Plane.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Prism.h" />
     <ClInclude Include="Source\DirectXStuff\Drawable\Pyramid.h" />

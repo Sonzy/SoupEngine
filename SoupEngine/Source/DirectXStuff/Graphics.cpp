@@ -17,7 +17,7 @@ namespace dx = DirectX;
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3DCompiler.lib")
 
-Graphics::Graphics(HWND hWnd)
+Graphics::Graphics(HWND hWnd, int width, int height)
 	: projection(DirectX::FXMMATRIX())
 {
 	// USed to check D3D function stuff
@@ -25,8 +25,8 @@ Graphics::Graphics(HWND hWnd)
 
 	//Create swapchain options
 	DXGI_SWAP_CHAIN_DESC sd;
-	sd.BufferDesc.Width = 800;
-	sd.BufferDesc.Height = 600;
+	sd.BufferDesc.Width = width;
+	sd.BufferDesc.Height = height;
 	sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator = 0;
 	sd.BufferDesc.RefreshRate.Denominator = 0;
@@ -79,8 +79,8 @@ Graphics::Graphics(HWND hWnd)
 	// Create the depth stencil texutre
 	wrl::ComPtr<ID3D11Texture2D> pDepthStencil;
 	D3D11_TEXTURE2D_DESC descDepth = {};
-	descDepth.Width = 800u;
-	descDepth.Height = 600u;
+	descDepth.Width = width;
+	descDepth.Height = height;
 	descDepth.MipLevels = 1u;
 	descDepth.ArraySize = 1u; // Can create an array in 1 resource
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT; // D32 is special for depth. Uses 32bit floats
@@ -105,8 +105,8 @@ Graphics::Graphics(HWND hWnd)
 
 	//Setup viewport
 	D3D11_VIEWPORT vp;
-	vp.Width = 800.0f;
-	vp.Height = 800.0f;
+	vp.Width = width;
+	vp.Height = height;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0.0f;
