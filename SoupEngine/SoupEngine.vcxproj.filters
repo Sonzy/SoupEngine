@@ -272,5 +272,8 @@
     <FxCompile Include="Source\Shaders\PerPixelColorBlendVS.hlsl" />
     <FxCompile Include="Source\Shaders\TexturedPerPixelPS.hlsl" />
     <FxCompile Include="Source\Shaders\TexturedPerPixelVS.hlsl" />
+    <FxCompile Include="Source\Shaders\PhongVS.hlsl" />
+    <FxCompile Include="Source\Shaders\PhongPS.hlsl" />
+    <FxCompile Include="Source\Shaders\PhongSpecularPS.hlsl" />
   </ItemGroup>
 </Project>

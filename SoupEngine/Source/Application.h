@@ -19,7 +19,6 @@ private:
 	// Runs a single frame
 	void Tick();
 	void RenderDemoWindow();
-	void ShowModelWindow();
 
 	void RawInputToggle();
 	void ShowRawInputWindow();
@@ -31,7 +30,7 @@ private:
 	Camera cam;
 	PointLight light;
 
-	Model nano{window.GetGraphics(), "Source\\Models\\nanosuit.obj"};
+	Model nano{window.GetGraphics(), "Source\\Models\\nano_textured\\nanosuit.obj"};
 	float simSpeed = 1.0f;
 
 	int x = 0;

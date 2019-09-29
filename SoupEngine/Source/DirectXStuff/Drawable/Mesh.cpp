@@ -3,6 +3,9 @@
 #include <unordered_map>
 #include <sstream>
 #include "BindableBase.h"
+#include "DirectXStuff/Bindable/Texture.h"
+#include "DirectXStuff/Bindable/Sampler.h"
+#include "DirectXStuff/Textures/Surface.h"
 
 namespace dx = DirectX;
 using namespace Bind;
@@ -212,7 +215,7 @@ Model::Model(Graphics& gfx, const std::string fileName)
 
 	for (size_t i = 0; i < pScene->mNumMeshes; i++)
 	{
-		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i]));
+		meshPtrs.push_back(ParseMesh(gfx, *pScene->mMeshes[i], pScene->mMaterials));
 	}
 
 	int nextId = 0;
@@ -236,7 +239,7 @@ void Model::ShowWindow(const char* windowName) noexcept
 Model::~Model() noexcept
 {}
 
-std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
+std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials)
 {
 	using VertexSys::VertexLayout;
 
@@ -244,13 +247,15 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
 		VertexLayout{}
 		.Append(VertexLayout::Position3D)
 		.Append(VertexLayout::Normal)
+		.Append(VertexLayout::Texture2D)
 	));
 
 	for (unsigned int i = 0; i < mesh.mNumVertices; i++)
 	{
 		vbuf.EmplaceBack(
 			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mVertices[i]),
-			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i])
+			*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i]),
+			*reinterpret_cast<dx::XMFLOAT2*>(&mesh.mTextureCoords[0][i])
 		);
 	}
 
@@ -267,25 +272,53 @@ std::unique_ptr<Mesh> Model::ParseMesh(Graphics& gfx, const aiMesh& mesh)
 
 	std::vector<std::unique_ptr<Bind::Bindable>> bindablePtrs;
 
+	bool hasSpecular = false;
+	float shinyness = 35.0f;
+	if (mesh.mMaterialIndex >= 0)
+	{
+		auto& material = *pMaterials[mesh.mMaterialIndex];
+
+		using namespace std::string_literals;
+		const auto base = "Source\\Models\\nano_textured\\"s;
+		aiString texFileName;
+
+		material.GetTexture(aiTextureType_DIFFUSE, 0, &texFileName);
+		bindablePtrs.push_back(std::make_unique<Bind::Texture>(gfx, Surface::FromFile(base + texFileName.C_Str() ))); //Load diffuse to shader texture slot 0
+
+		if (material.GetTexture(aiTextureType_SPECULAR, 0, &texFileName) == aiReturn_SUCCESS)
+		{
+			bindablePtrs.push_back(std::make_unique<Bind::Texture>(gfx, Surface::FromFile(base + texFileName.C_Str()), 1)); //Load specular to shader texture slot 1
+			hasSpecular = true;
+		}
+		else
+			material.Get(AI_MATKEY_SHININESS, shinyness);
+
+		bindablePtrs.push_back(std::make_unique<Bind::Sampler>(gfx));
+	}
+
+
 	bindablePtrs.push_back(std::make_unique<Bind::VertexBuffer>(gfx, vbuf));
 
 	bindablePtrs.push_back(std::make_unique<Bind::IndexBuffer>(gfx, indices));
 
-	auto pvs = std::make_unique<Bind::VertexShader>(gfx, L"Source/Shaders/PerPixelVS.cso");
+	auto pvs = std::make_unique<Bind::VertexShader>(gfx, L"Source/Shaders/PhongVS.cso");
 	auto pvsbc = pvs->GetByteCode();
 	bindablePtrs.push_back(std::move(pvs));
 
-	bindablePtrs.push_back(std::make_unique<Bind::PixelShader>(gfx, L"Source/Shaders/PerPixelPS.cso"));
-
 	bindablePtrs.push_back(std::make_unique<Bind::InputLayout>(gfx, vbuf.GetLayout().GetD3DLayout(), pvsbc));
+
+	//Load the correct shader required
+	bindablePtrs.push_back(hasSpecular ?
+		std::make_unique<Bind::PixelShader>(gfx, L"Source/Shaders/PhongSpecularPS.cso") :
+		std::make_unique<Bind::PixelShader>(gfx, L"Source/Shaders/PhongPS.cso") );
 
 	struct PSMaterialConstant
 	{
-		DirectX::XMFLOAT3 color = { 0.6f,0.6f,0.8f };
-		float specularIntensity = 0.6f;
-		float specularPower = 30.0f;
-		float padding[3];
+		float specularIntensity = 0.8f;
+		float specularPower;
+		float padding[2];
 	} pmc;
+	pmc.specularPower = shinyness;
 	bindablePtrs.push_back(std::make_unique<Bind::PixelConstantBuffer<PSMaterialConstant>>(gfx, pmc, 1u));
 
 	return std::make_unique<Mesh>(gfx, std::move(bindablePtrs));

@@ -1,1 +1,12 @@
-﻿D:\Program Files\Visual Studio\Visual Studio IDE\Common7\IDE\VC\VCTargets\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: The Windows SDK version 10.0.17134.0 was not found. Install the required version of Windows SDK or change the SDK version in the project property pages or by right-clicking the solution and selecting "Retarget solution".
+﻿  Application.cpp
+D:\Personal Projects\SoupEngine\SoupEngine\Source\Application.cpp(137,30): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+  Mesh.cpp
+D:\Personal Projects\SoupEngine\SoupEngine\Source\Application.cpp(137,20): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
+  Main.cpp
+D:\Personal Projects\SoupEngine\SoupEngine\Source\DirectXStuff\Drawable\Mesh.cpp(253,20): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  28 of 3231 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+    26 functions were new in current compilation
+    27 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  SoupEngine.vcxproj -> D:\Personal Projects\SoupEngine\x64\Release\SoupEngine.exe

@@ -75,34 +75,6 @@ void Application::RenderDemoWindow()
 	}
 }
 
-void Application::ShowModelWindow()
-{
-	if (ImGui::Begin("Model"))
-	{
-		using namespace std::string_literals;
-
-		ImGui::Text("Orientation");
-		ImGui::SliderAngle("Roll", &transform.rot.roll, -180.0f, 180.0f);
-		ImGui::SliderAngle("Pitch", &transform.rot.pitch, -180.0f, 180.0f);
-		ImGui::SliderAngle("Yaw", &transform.rot.yaw, -180.0f, 180.0f);
-
-		ImGui::Text("Position");
-		ImGui::SliderFloat("X", &transform.pos.x, -60.0f, 60.0f);
-		ImGui::SliderFloat("X", &transform.pos.y, -60.0f, 60.0f);
-		ImGui::SliderFloat("Z", &transform.pos.z, -60.0f, 60.0f);
-		if (ImGui::Button("Reset"))
-		{
-			transform.pos.x = 0.0f;
-			transform.pos.y = 0.0f;
-			transform.pos.z = 0.0f;
-			transform.rot.roll = 0.0f;
-			transform.rot.pitch = 0.0f;
-			transform.rot.yaw = 0.0f;
-		}
-	}
-	ImGui::End();
-}
-
 void Application::RawInputToggle()
 {
 	//Toggling cursor
